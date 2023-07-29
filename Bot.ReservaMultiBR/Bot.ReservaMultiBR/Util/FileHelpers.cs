@@ -35,18 +35,19 @@ namespace Bot.ReservaMultiBR.Util
 
             String line = string.Empty;
 
-            using (StreamReader reader = new StreamReader(Paths.PENDENTES))
+            using (StreamReader reader = new StreamReader("C:\\bots\\pendentes\\pendentes.txt"))
             {
                 line = reader.ReadLine();
             }
 
-            // remover do inicio da fila
-            line = line.Replace(code + ";", "");
+            using (StreamWriter writer = new StreamWriter("C:\\bots\\pendentes\\pendentes.txt"))
+            {
+                line = line.Replace(code + ";", "");
 
-            // jogar no final da fila
-            line += code + ";";
+                line += code + ";";
 
-            File.AppendAllText($@"{Paths.PENDENTES}", $@"{line}" + Environment.NewLine);
+                writer.WriteLine(line);
+            }
         }
 
         public static void SetSucesso(string code)
