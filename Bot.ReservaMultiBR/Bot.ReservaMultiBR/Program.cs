@@ -45,8 +45,10 @@ namespace Test
 
                 Console.WriteLine(".:: 5. Token");
                 URL_TOKEN = Selenium.GetUrl();
+
                 Console.WriteLine(".:: 6. Feito");
                 Selenium.Dispose();
+                WorkFlow();
             }
             finally
             {
