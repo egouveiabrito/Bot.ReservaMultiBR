@@ -107,7 +107,7 @@ namespace Bot.ReservaMultiBR.Util
 
             using (StreamWriter writer = new StreamWriter("C:\\bots\\infos\\infos.txt"))
             {
-                line += infos;
+                line += infos + "\n";
 
                 writer.WriteLine(line);
             }
