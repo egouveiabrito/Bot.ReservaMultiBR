@@ -13,7 +13,7 @@ namespace Test
 
         public static void Main()
         {
-            FileHelpers.SetProcessamentos("teste");
+            Start();
         }
         public static void Start()
         {
