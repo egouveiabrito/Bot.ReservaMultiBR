@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Bot.ReservaMultiBR.Util
 {
@@ -42,75 +43,30 @@ namespace Bot.ReservaMultiBR.Util
         {
             SetProcessamentos(code);
 
-            String line = string.Empty;
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Sucesso: {code}" + Environment.NewLine;
 
-            using (StreamReader reader = new StreamReader("C:\\bots\\pendentes\\pendentes.txt"))
-            {
-                line = reader.ReadLine();
-            }
-
-            using (StreamWriter writer = new StreamWriter("C:\\bots\\pendentes\\sucesso.txt"))
-            {
-                line = line.Replace(code + ";", "");
-
-                line += code + ";";
-
-                writer.WriteLine(line);
-            }
+            File.AppendAllText("C:\\bots\\sucesso\\sucesso.txt", line);
         }
 
         public static void SetProcessamentos(string code)
         {
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Grupo: {code}" + Environment.NewLine;
 
-            String line = string.Empty;
-
-            using (StreamReader reader = new StreamReader("C:\\bots\\pendentes\\processamentos.txt"))
-            {
-                line = reader.ReadLine();
-            }
-
-            using (StreamWriter writer = new StreamWriter("C:\\bots\\processamentos\\processamentos.txt"))
-            {
-                line += DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + "/Grupo:" + code + "\n";
-
-                writer.WriteLine(line);
-            }
+            File.AppendAllText("C:\\bots\\processamentos\\processamentos.txt", line);
         }
 
         public static void SetErrors(string error)
         {
-            String line = string.Empty;
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Errors: {error}" + Environment.NewLine;
 
-            using (StreamReader reader = new StreamReader("C:\\bots\\errors\\error.txt"))
-            {
-                line = reader.ReadLine();
-            }
-
-            using (StreamWriter writer = new StreamWriter("C:\\bots\\errors\\error.txt"))
-            {
-                line += DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + "/Error:" + error + "\n";
-
-                writer.WriteLine(line);
-            }
+            File.AppendAllText("C:\\bots\\errors\\error.txt", line);
         }
 
         public static void SetInfos(string infos)
         {
-            String line = string.Empty;
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Info: {infos}" + Environment.NewLine;
 
-            Console.WriteLine(infos);
-
-            using (StreamReader readers = new StreamReader("C:\\bots\\infos\\infos.txt"))
-            {
-                line = readers.ReadLine();
-            }
-
-            using (StreamWriter writer = new StreamWriter("C:\\bots\\infos\\infos.txt"))
-            {
-                line += infos + "\n";
-
-                writer.WriteLine(line);
-            }
+            File.AppendAllText("C:\\bots\\infos\\infos.txt", line);
         }
     }
 }
