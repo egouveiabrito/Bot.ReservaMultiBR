@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\Bot.ReservaMultBR\\Automate.Core.Utils\\Automate.Core.Utils.csproj": {}
+    "C:\\Projetos\\Bot.ReservaMultiBR\\Bot.ReservaMultiBR\\Automate.Core.Utils\\Automate.Core.Utils.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\Bot.ReservaMultBR\\Automate.Core.Utils\\Automate.Core.Utils.csproj": {
+    "C:\\Projetos\\Bot.ReservaMultiBR\\Bot.ReservaMultiBR\\Automate.Core.Utils\\Automate.Core.Utils.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\Bot.ReservaMultBR\\Automate.Core.Utils\\Automate.Core.Utils.csproj",
+        "projectUniqueName": "C:\\Projetos\\Bot.ReservaMultiBR\\Bot.ReservaMultiBR\\Automate.Core.Utils\\Automate.Core.Utils.csproj",
         "projectName": "Automate.Core.Utils",
-        "projectPath": "C:\\Projects\\Bot.ReservaMultBR\\Automate.Core.Utils\\Automate.Core.Utils.csproj",
-        "packagesPath": "C:\\Users\\edson.brito\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\Bot.ReservaMultBR\\Automate.Core.Utils\\obj\\",
+        "projectPath": "C:\\Projetos\\Bot.ReservaMultiBR\\Bot.ReservaMultiBR\\Automate.Core.Utils\\Automate.Core.Utils.csproj",
+        "packagesPath": "C:\\Users\\ADM\\.nuget\\packages\\",
+        "outputPath": "C:\\Projetos\\Bot.ReservaMultiBR\\Bot.ReservaMultiBR\\Automate.Core.Utils\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\edson.brito\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +25,7 @@
           "net7.0"
         ],
         "sources": {
-          "http://tibrsp-v0034:1048/nuget": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -90,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }

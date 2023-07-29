@@ -209,7 +209,6 @@ namespace AutomationTest.Core
         {
             try
             {
-
                 WebDriver.Close();
             }
             catch (Exception)
