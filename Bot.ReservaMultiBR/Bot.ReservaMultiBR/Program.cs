@@ -20,6 +20,7 @@ namespace Test
             try
             {
                 Console.Title = "..:::: MULT BR SERVICOS FINANCEIROS LTDA ::::..";
+                FileHelpers.CreateDirectorys();
                 Selenium.Delay(9000);
                 Console.Clear();
 
@@ -36,24 +37,32 @@ namespace Test
                 FileHelpers.SetInfos(".:: 3. Obter Arquivo");
                 CODES_ARRAY = FileHelpers.Pendentes();
 
-                Selenium.Delay(2000);
-                FileHelpers.SetInfos(".:: 4. Selecionar Tab");
-                Selenium.SetTab();
+                if (CODES_ARRAY?.Count > 0)
+                {
+                    Selenium.Delay(2000);
+                    FileHelpers.SetInfos(".:: 4. Selecionar Tab");
+                    Selenium.SetTab();
 
-                FileHelpers.SetInfos(".:: 5. Token");
-                URL_TOKEN = Selenium.GetUrl();
+                    FileHelpers.SetInfos(".:: 5. Token");
+                    URL_TOKEN = Selenium.GetUrl();
 
-                FileHelpers.SetInfos(".:: 6. Feito");
-                Selenium.Dispose();
+                    FileHelpers.SetInfos(".:: 6. Feito");
+                    Selenium.Dispose();
 
-                WorkFlow();
+                    WorkFlow();
+
+                    Start();
+                }
+                else
+                {
+                    FileHelpers.SetInfos(".:: 4. Sem grupos no arquivo de pendentes");
+                    Selenium.Dispose();
+                    return;
+                }
             }
             catch (Exception error)
             {
                 FileHelpers.SetErrors(error.Message);
-            }
-            finally
-            {
                 Start();
             }
         }
@@ -170,7 +179,6 @@ namespace Test
                 finally
                 {
                     Selenium.Dispose();
-                    Console.Clear();
                     FileHelpers.SetInfos("Proxímo processamento:" + DateTime.Now.AddMilliseconds(30 * 60 * 1000));
                     Thread.Sleep(15 * 60 * 1000);
                     WorkFlow();

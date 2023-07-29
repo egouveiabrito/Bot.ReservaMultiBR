@@ -1,18 +1,30 @@
-﻿using System.IO;
-using static System.Net.Mime.MediaTypeNames;
-
+﻿
 namespace Bot.ReservaMultiBR.Util
 {
     public static class FileHelpers
     {
+        public static void CreateDirectorys()
+        {
+            Console.WriteLine("Criando diretórios...");
+
+            Directory.CreateDirectory(Paths.INFOS);
+
+            Directory.CreateDirectory(Paths.PROCESSAMENTOS);
+
+            Directory.CreateDirectory(Paths.ERRORS);
+
+            Directory.CreateDirectory(Paths.INFOS);
+        }
         public static List<string> Pendentes()
         {
             String line = string.Empty;
 
-            using (StreamReader reader = new StreamReader("C:\\bots\\pendentes\\pendentes.txt"))
+            using (StreamReader reader = new StreamReader(Paths.PENDENTES))
             {
                 line = reader.ReadLine();
             }
+
+            Console.WriteLine("Para Processar:" + line);
 
             return line?.Split(';').ToList();
         }
@@ -23,50 +35,57 @@ namespace Bot.ReservaMultiBR.Util
 
             String line = string.Empty;
 
-            using (StreamReader reader = new StreamReader("C:\\bots\\pendentes\\pendentes.txt"))
+            using (StreamReader reader = new StreamReader(Paths.PENDENTES))
             {
                 line = reader.ReadLine();
             }
 
-            using (StreamWriter writer = new StreamWriter("C:\\bots\\pendentes\\pendentes.txt"))
-            {
-                line = line.Replace(code + ";", "");
+            // remover do inicio da fila
+            line = line.Replace(code + ";", "");
 
-                line += code + ";";
+            // jogar no final da fila
+            line += code + ";";
 
-                writer.WriteLine(line);
-            }
-
+            File.AppendAllText($@"{Paths.PENDENTES}", $@"{line}" + Environment.NewLine);
         }
 
         public static void SetSucesso(string code)
         {
+
             SetProcessamentos(code);
 
-            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Sucesso: {code}" + Environment.NewLine;
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Sucesso: {code}";
 
-            File.AppendAllText("C:\\bots\\sucesso\\sucesso.txt", line);
+            Console.WriteLine(line);
+
+            File.AppendAllText($@"{Paths.INFOS}\sucesso.txt", $@"{line}" + Environment.NewLine);
         }
 
         public static void SetProcessamentos(string code)
         {
-            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Grupo: {code}" + Environment.NewLine;
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Grupo: {code}";
 
-            File.AppendAllText("C:\\bots\\processamentos\\processamentos.txt", line);
+            Console.WriteLine(line);
+
+            File.AppendAllText($@"{Paths.PROCESSAMENTOS}\processamentos.txt", $@"{line}" + Environment.NewLine);
         }
 
         public static void SetErrors(string error)
         {
-            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Errors: {error}" + Environment.NewLine;
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Error: {error}";
 
-            File.AppendAllText("C:\\bots\\errors\\error.txt", line);
+            Console.WriteLine(line);
+
+            File.AppendAllText($@"{Paths.ERRORS}\errors.txt", $@"{line}" + Environment.NewLine);
         }
 
         public static void SetInfos(string infos)
         {
-            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Info: {infos}" + Environment.NewLine;
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Info: {infos}";
 
-            File.AppendAllText("C:\\bots\\infos\\infos.txt", line);
+            Console.WriteLine(line);
+
+            File.AppendAllText($@"{Paths.INFOS}\infos.txt", $@"{line}" + Environment.NewLine);
         }
     }
 }
