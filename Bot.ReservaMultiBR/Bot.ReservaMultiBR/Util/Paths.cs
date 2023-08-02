@@ -4,7 +4,7 @@
     {
         public static string INFOS = @"C:\bots\infos";
         public static string ERRORS = @"C:\bots\errors";
-        public static string PROCESSAMENTOS = @"C:\bots\processamentos";
+        public static string STATUS = @"C:\bots\status";
         public static string SUCESSO = @"C:\bots\sucesso";
 
         // Arquivo nao pode ser excluido

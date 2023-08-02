@@ -16,7 +16,7 @@ namespace AutomationTest.Core
         {
             Configuration = configuration;
             
-            Wait = new WebDriverWait(WebDriver, TimeSpan.FromMilliseconds(6000));
+            Wait = new WebDriverWait(WebDriver, TimeSpan.FromMilliseconds(10000));
         }
         public string GetUrl()
         {

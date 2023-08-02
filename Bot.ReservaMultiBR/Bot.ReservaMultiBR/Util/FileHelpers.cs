@@ -1,4 +1,6 @@
 ﻿
+using System.IO;
+
 namespace Bot.ReservaMultiBR.Util
 {
     public static class FileHelpers
@@ -9,7 +11,7 @@ namespace Bot.ReservaMultiBR.Util
 
             Directory.CreateDirectory(Paths.INFOS);
 
-            Directory.CreateDirectory(Paths.PROCESSAMENTOS);
+            Directory.CreateDirectory(Paths.STATUS);
 
             Directory.CreateDirectory(Paths.ERRORS);
 
@@ -24,14 +26,14 @@ namespace Bot.ReservaMultiBR.Util
                 line = reader.ReadLine();
             }
 
-            Console.WriteLine("Para Processar:" + line);
+            SetInfos(".:: 2. Para Processar: " + line);
 
             return line?.Split(';').ToList();
         }
 
-        public static void SetReprocessar(string code)
+        public static void SetReprocessar(string code, string status)
         {
-            SetProcessamentos(code);
+            SetStatus(code, status);
 
             String line = string.Empty;
 
@@ -50,25 +52,13 @@ namespace Bot.ReservaMultiBR.Util
             }
         }
 
-        public static void SetSucesso(string code)
+        public static void SetStatus(string code, string status)
         {
+            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Grupo: {code} /Status: {status}";
 
-            SetProcessamentos(code);
+            SetInfos(status);
 
-            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Sucesso: {code}";
-
-            Console.WriteLine(line);
-
-            File.AppendAllText($@"{Paths.INFOS}\sucesso.txt", $@"{line}" + Environment.NewLine);
-        }
-
-        public static void SetProcessamentos(string code)
-        {
-            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Grupo: {code}";
-
-            Console.WriteLine(line);
-
-            File.AppendAllText($@"{Paths.PROCESSAMENTOS}\processamentos.txt", $@"{line}" + Environment.NewLine);
+            File.AppendAllText($@"{Paths.STATUS}\status.txt", $@"{line}" + Environment.NewLine);
         }
 
         public static void SetErrors(string error)
