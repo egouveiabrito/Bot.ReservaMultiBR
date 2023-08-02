@@ -75,7 +75,7 @@ namespace Test
         {
             Selenium.Delay(9000);
             Selenium.Dispose();
-            FileHelpers.SetInfos("Proxímo processamento:" + DateTime.Now.AddSeconds(10));
+            FileHelpers.SetInfos("Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
             Thread.Sleep(timer);
             Start();
         }
