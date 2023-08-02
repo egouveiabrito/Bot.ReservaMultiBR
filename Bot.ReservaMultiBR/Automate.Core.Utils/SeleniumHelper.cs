@@ -15,7 +15,7 @@ namespace AutomationTest.Core
         public SeleniumHelper(ConfigurationHelper configuration)
         {
             Configuration = configuration;
-            
+
             Wait = new WebDriverWait(WebDriver, TimeSpan.FromMilliseconds(10000));
         }
         public string GetUrl()
@@ -31,7 +31,7 @@ namespace AutomationTest.Core
             catch (Exception erro)
             {
                 Console.WriteLine(erro.Message);
-                Dispose();
+                Finalizar();
             }
         }
         public bool VaidateContentUrl(string content)
@@ -215,19 +215,24 @@ namespace AutomationTest.Core
             {
             }
         }
-        public void Dispose()
+        public void Finalizar()
         {
             try
             {
                 if (WebDriver != null)
                 {
-                    WebDriver.Dispose();
+                    WebDriver.Close();
                     WebDriver.Quit();
                 }
             }
-            catch (Exception)
+            catch
             {
             }
+        }
+
+        public void Dispose()
+        {
+            WebDriver.Dispose();
         }
     }
 }

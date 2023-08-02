@@ -11,6 +11,8 @@ namespace Test
 
         private static SeleniumHelper Selenium = new SeleniumHelper(new ConfigurationHelper());
 
+        private static int retry_workflow = 0;
+
         public static void Main()
         {
             FileHelpers.CreateDirectorys();
@@ -49,7 +51,7 @@ namespace Test
                     URL_TOKEN = Selenium.GetUrl();
 
                     FileHelpers.SetInfos(".:: 7. Feito");
-                    Selenium.Dispose();
+                    Selenium.Finalizar();
 
                     WorkFlow(); // iniciar processo
                     Restart(30 * 60 * 1000); // proxima execução em 30 minutos
@@ -58,7 +60,7 @@ namespace Test
                 {
                     FileHelpers.SetInfos(".:: 4. Sem grupos no arquivo de pendentes");
 
-                    Selenium.Dispose();
+                    Selenium.Finalizar();
 
                     return;
                 }
@@ -74,9 +76,10 @@ namespace Test
         private static void Restart(int timer = 10000)
         {
             Selenium.Delay(9000);
-            Selenium.Dispose();
+            Selenium.Finalizar();
             FileHelpers.SetInfos("Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
             Thread.Sleep(timer);
+            Selenium = new SeleniumHelper(new ConfigurationHelper());
             Start();
         }
 
@@ -129,7 +132,7 @@ namespace Test
                         var vendaDisponivel = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div");
                         if (vendaDisponivel.Contains("Condições de venda não disponíveis"))
                         {
-                            Selenium.Dispose();
+                            Selenium.Finalizar();
                             FileHelpers.SetStatus(code, ".:: 10. Fim: Condições de venda não disponíveis\n");
                             continue;
                         }
@@ -139,7 +142,7 @@ namespace Test
                         var existeGrupo = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div/div");
                         if (existeGrupo.Contains("Nenhum resultado"))
                         {
-                            Selenium.Dispose();
+                            Selenium.Finalizar();
                             FileHelpers.SetStatus(code, ".:: 11. Fim: Nenhum resultado\n");
                             continue;
                         }
@@ -160,19 +163,17 @@ namespace Test
                         if (utrapassouLimte.Contains("ATENÇÃO"))
                         {
                             FileHelpers.SetStatus(code, ".:: 14. Fim: Foi ultrapassada a quantidade máxima de reservas de cotas em estoque para este usuário.\n");
-                            Selenium.Dispose();
+                            Selenium.Finalizar();
                             continue;
                         }
 
                         FileHelpers.SetInfos(".:: 14. Confirmar");
                         Selenium.Delay(1000);
-                        Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
+                      //  Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
 
                         Selenium.Delay(9000);
 
-                        //MOCK
-                        // var sucesso = Selenium.GetTextByXPath("/html/body/div/div[2]/div/div[1]/div[1]/main/div/div/div/div[2]/div[3]/div/div/div/h2");
-                        var sucesso = "Selecione o Produto";
+                        var sucesso = Selenium.GetTextByXPath("/html/body/div/div[2]/div/div[1]/div[1]/main/div/div/div/div[2]/div[3]/div/div/div/h2");
 
                         if (sucesso.Contains("Selecione o Produto"))
                         {
@@ -184,9 +185,26 @@ namespace Test
                 }
                 catch (Exception error)
                 {
-                    FileHelpers.SetErrors(error?.Message);
+                    FileHelpers.SetErrors($"Ocorreu um erro no workflow: {error?.Message}");
 
-                    WorkFlow();
+                    Selenium.Finalizar();
+
+                    retry_workflow += 1;
+
+                    if (retry_workflow < 5)
+                    {
+                        FileHelpers.SetInfos($"Nova tentativa no workflow...{retry_workflow}");
+
+                        Selenium = new SeleniumHelper(new ConfigurationHelper());
+
+                        WorkFlow();
+                    }
+                    else
+                    {
+                        FileHelpers.SetInfos($"Inicializar...");
+
+                        Start();
+                    }
                 }
             }
         }

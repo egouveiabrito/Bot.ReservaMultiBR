@@ -23,7 +23,7 @@ namespace Bot.ReservaMultiBR.Util
 
             using (StreamReader reader = new StreamReader(Paths.PENDENTES))
             {
-                line = reader.ReadLine();
+                line = reader?.ReadLine();
             }
 
             SetInfos(".:: 2. Para Processar: " + line);
@@ -39,12 +39,12 @@ namespace Bot.ReservaMultiBR.Util
 
             using (StreamReader reader = new StreamReader("C:\\bots\\pendentes\\pendentes.txt"))
             {
-                line = reader.ReadLine();
+                line = reader?.ReadLine();
             }
 
             using (StreamWriter writer = new StreamWriter("C:\\bots\\pendentes\\pendentes.txt"))
             {
-                line = line.Replace(code + ";", "");
+                line = line?.Replace(code + ";", "");
 
                 line += code + ";";
 
