@@ -169,18 +169,19 @@ namespace Test
 
                         FileHelpers.SetInfos(".:: 14. Confirmar");
                         Selenium.Delay(1000);
-                      //  Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
+                        Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
 
                         Selenium.Delay(9000);
 
-                        var sucesso = Selenium.GetTextByXPath("/html/body/div/div[2]/div/div[1]/div[1]/main/div/div/div/div[2]/div[3]/div/div/div/h2");
+                        Selenium.GetTextByXPath("/html/body/div/div[2]/div/div[1]/div[1]/main/div/div/div/div[2]/div[3]/div/div/div/h2");
 
-                        if (sucesso.Contains("Selecione o Produto"))
-                        {
-                            FileHelpers.SetStatus(code, ".:: 15. Reservado com sucesso");
+                        FileHelpers.SetStatus(code, ".:: 15. Reservado com sucesso");
 
-                            Mail.Send(); // enviar email
-                        }
+                        FileHelpers.SetInfos(".:: 16. Enviar e-mail");
+
+                        Mail.Send();
+
+                        FileHelpers.SetInfos(".:: 17. Fim: Enviado com sucesso");
                     }
                 }
                 catch (Exception error)
@@ -191,7 +192,7 @@ namespace Test
 
                     retry_workflow += 1;
 
-                    if (retry_workflow < 5)
+                    if (retry_workflow < 3)
                     {
                         FileHelpers.SetInfos($"Nova tentativa no workflow...{retry_workflow}");
 
