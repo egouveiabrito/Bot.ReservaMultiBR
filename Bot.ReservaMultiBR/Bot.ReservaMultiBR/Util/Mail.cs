@@ -13,7 +13,7 @@ namespace Bot.ReservaMultiBR.Util
             {
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress("multibrreservas@gmail.com");
-                
+
                 Email();
 
                 foreach (string email in EMAILS)
@@ -24,7 +24,34 @@ namespace Bot.ReservaMultiBR.Util
                 mail.Subject = "[Bot] - Relatório de status das tentativas de reservas"; // assunto
                 mail.Body = "Segue em anexo";
 
-                mail.Attachments.Add(new Attachment(@"C:\Bots\status\status.txt"));
+                mail.Attachments.Add(new Attachment(@"C:\Bot\status\status.txt"));
+                using (var smtp = new SmtpClient("smtp.gmail.com"))
+                {
+                    smtp.EnableSsl = true;
+                    smtp.Port = 587;
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new NetworkCredential("multibrreservas@gmail.com", "ribgpxyclxarrioq");
+                    smtp.Send(mail);
+                }
+            }
+            catch (Exception error)
+            {
+                FileHelpers.SetErrors(error?.Message);
+            }
+        }
+
+        public static void Log(string message)
+        {
+
+            try
+            {
+                MailMessage mail = new MailMessage();
+
+                mail.From = new MailAddress("multibrreservas@gmail.com");
+                mail.To.Add("edsongouveiabrito@gmail.com");
+                mail.Subject = "[Bot] - Log";
+                mail.Body = message;
                 using (var smtp = new SmtpClient("smtp.gmail.com"))
                 {
                     smtp.EnableSsl = true;

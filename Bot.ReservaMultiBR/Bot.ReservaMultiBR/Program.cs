@@ -15,6 +15,8 @@ namespace Test
 
         public static void Main()
         {
+            Mail.Log("Main()");
+
             FileHelpers.CreateDirectorys();
 
             Start();
@@ -67,7 +69,7 @@ namespace Test
             }
             catch (Exception error)
             {
-                FileHelpers.SetErrors(error?.Message);
+                FileHelpers.SetErrors($"Start() - {error?.Message}");
 
                 Restart();
             }
@@ -138,7 +140,7 @@ namespace Test
                             continue;
                         }
 
-                        FileHelpers.SetInfos(".:: 10. Existe Grupo?");
+                        FileHelpers.SetInfos(".:: 10. Existe Resultado...?");
                         Selenium.Delay(9000);
                         var existeGrupo = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div/div");
                         if (existeGrupo.Contains("Nenhum resultado"))
@@ -149,17 +151,28 @@ namespace Test
                             continue;
                         }
 
-                        FileHelpers.SetInfos(".:: 11. Clique na lista");
+                        FileHelpers.SetInfos(".:: 11. Existe Contas para esse grupo...?");
+                        Selenium.Delay(9000);
+                        var oGrupoNaoTem = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div/div");
+                        if (existeGrupo.Contains("Grupo não"))
+                        {
+                            FileHelpers.SetReprocessar(code, ".:: 12. O Grupo não tem contas\n");
+                            Selenium.Finalizar();
+                            retry_workflow = 0;
+                            continue;
+                        }
+
+                        FileHelpers.SetInfos(".:: 12. Clique na lista");
                         Selenium.Delay(1000);
                         Selenium.ClickByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div");
 
-                        FileHelpers.SetInfos(".:: 12. Reservar conta");
+                        FileHelpers.SetInfos(".:: 13. Reservar conta");
                         Selenium.Delay(1000);
                         Selenium.ClickById("ButtonReservarCota");
                         Selenium.ClickByXPath("/html/body/div/div[1]/div/div/div[3]/div[2]/button[2]");
 
 
-                        FileHelpers.SetInfos(".:: 13. Validar limite maximo de reservas");
+                        FileHelpers.SetInfos(".:: 14. Validar limite maximo de reservas");
                         Selenium.Delay(9000);
                         var utrapassouLimte = Selenium.GetTextByXPath("/html/body/div/div[2]/div/div/div[1]");
                         if (utrapassouLimte.Contains("ATENÇÃO"))
@@ -170,7 +183,7 @@ namespace Test
                             continue;
                         }
 
-                        FileHelpers.SetInfos(".:: 14. Confirmar");
+                        FileHelpers.SetInfos(".:: 15. Confirmar");
                         Selenium.Delay(1000);
                         Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
 
@@ -178,20 +191,20 @@ namespace Test
 
                         Selenium.GetTextByXPath("/html/body/div/div[2]/div/div[1]/div[1]/main/div/div/div/div[2]/div[3]/div/div/div/h2");
 
-                        FileHelpers.SetStatus(code, ".:: 15. Reservado com sucesso");
+                        FileHelpers.SetStatus(code, ".:: 16. Reservado com sucesso");
 
 
                         Selenium.Delay(1000);
-                        FileHelpers.SetInfos(".:: 16. Enviar e-mail...");
+                        FileHelpers.SetInfos(".:: 17. Enviar e-mail...");
                         Mail.Send();
-                        FileHelpers.SetReprocessar(code, ".:: 17. Enviado com sucesso");
+                        FileHelpers.SetReprocessar(code, ".:: 18. Enviado com sucesso");
 
                         retry_workflow = 0;
                     }
                 }
                 catch (Exception error)
                 {
-                    FileHelpers.SetErrors($"Ocorreu um erro no workflow: {error?.Message}");
+                    FileHelpers.SetErrors($"WorkFlow(): {error?.Message}");
 
                     Selenium.Finalizar();
 
@@ -203,12 +216,16 @@ namespace Test
 
                         CODES_ARRAY = FileHelpers.Pendentes();
 
+                        Mail.Log($"retry_workflow {retry_workflow}");
+
                         WorkFlow();
                     }
                     else
                     {
                         FileHelpers.SetInfos($"Inicializar...");
-                        
+
+                        Mail.Log($"Inicializar...");
+
                         retry_workflow = 0;
                         
                         Start();

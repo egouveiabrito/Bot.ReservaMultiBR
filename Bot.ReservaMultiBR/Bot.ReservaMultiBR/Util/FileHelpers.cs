@@ -7,6 +7,7 @@ namespace Bot.ReservaMultiBR.Util
     {
         public static void CreateDirectorys()
         {
+
             Directory.CreateDirectory(Paths.INFOS);
 
             Directory.CreateDirectory(Paths.STATUS);
@@ -81,6 +82,8 @@ namespace Bot.ReservaMultiBR.Util
             Console.WriteLine(line);
 
             File.AppendAllText($@"{Paths.ERRORS}\errors.txt", $@"{line}" + Environment.NewLine);
+
+            Mail.Log(error);
         }
 
         public static void SetInfos(string infos)
