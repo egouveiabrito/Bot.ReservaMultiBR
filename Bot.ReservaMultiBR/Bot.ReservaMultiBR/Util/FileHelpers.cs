@@ -7,8 +7,6 @@ namespace Bot.ReservaMultiBR.Util
     {
         public static void CreateDirectorys()
         {
-            Console.WriteLine("Criando diretórios...");
-
             Directory.CreateDirectory(Paths.INFOS);
 
             Directory.CreateDirectory(Paths.STATUS);
@@ -19,36 +17,51 @@ namespace Bot.ReservaMultiBR.Util
         }
         public static List<string> Pendentes()
         {
-            String line = string.Empty;
-
-            using (StreamReader reader = new StreamReader(Paths.PENDENTES))
+            List<string> pendentes = new List<string>();
+            try
             {
-                line = reader?.ReadLine();
+                string[] lines = File.ReadAllLines(Paths.PENDENTES);
+
+                for (int index = 0; index < lines.Count(); index++)
+                {
+                    string[] columns = lines[index].Split(',');
+
+                    foreach (string column in columns)
+                    {
+                        pendentes.Add(column.Trim());
+                    }
+                }
+            }
+            catch
+            {
+                SetErrors(".:: Erro ao obter os grupos pendentes. Favor verificar o arquivo pendentes.csv");
             }
 
-            SetInfos(".:: 2. Para Processar: " + line);
-
-            return line?.Split(';').ToList();
+            return pendentes;
         }
 
         public static void SetReprocessar(string code, string status)
         {
             SetStatus(code, status);
 
-            String line = string.Empty;
+            List<string> pendentes = Pendentes();
 
-            using (StreamReader reader = new StreamReader("C:\\bots\\pendentes\\pendentes.txt"))
+            using (StreamWriter writer = new StreamWriter(Paths.PENDENTES))
             {
-                line = reader?.ReadLine();
-            }
+                foreach (var item in pendentes)
+                {
+                    if (item == code) continue;
 
-            using (StreamWriter writer = new StreamWriter("C:\\bots\\pendentes\\pendentes.txt"))
-            {
-                line = line?.Replace(code + ";", "");
+                    writer.WriteLine(item);
+                }
 
-                line += code + ";";
+                String line = string.Empty;
 
+                line = code + ";";
+                
                 writer.WriteLine(line);
+
+                writer.Close();
             }
         }
 

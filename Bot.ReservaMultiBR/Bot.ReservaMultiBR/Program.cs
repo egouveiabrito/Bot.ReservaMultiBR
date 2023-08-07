@@ -132,8 +132,9 @@ namespace Test
                         var vendaDisponivel = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div");
                         if (vendaDisponivel.Contains("Condições de venda não disponíveis"))
                         {
+                            FileHelpers.SetReprocessar(code, ".:: 10. Condições de venda não disponíveis\n");
                             Selenium.Finalizar();
-                            FileHelpers.SetStatus(code, ".:: 10. Fim: Condições de venda não disponíveis\n");
+                            retry_workflow = 0;
                             continue;
                         }
 
@@ -142,8 +143,9 @@ namespace Test
                         var existeGrupo = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div/div");
                         if (existeGrupo.Contains("Nenhum resultado"))
                         {
+                            FileHelpers.SetReprocessar(code, ".:: 11. Nenhum resultado\n");
                             Selenium.Finalizar();
-                            FileHelpers.SetStatus(code, ".:: 11. Fim: Nenhum resultado\n");
+                            retry_workflow = 0;
                             continue;
                         }
 
@@ -162,8 +164,9 @@ namespace Test
                         var utrapassouLimte = Selenium.GetTextByXPath("/html/body/div/div[2]/div/div/div[1]");
                         if (utrapassouLimte.Contains("ATENÇÃO"))
                         {
-                            FileHelpers.SetStatus(code, ".:: 14. Fim: Foi ultrapassada a quantidade máxima de reservas de cotas em estoque para este usuário.\n");
+                            FileHelpers.SetReprocessar(code, ".:: 14. Foi ultrapassada a quantidade máxima de reservas de cotas em estoque para este usuário.\n");
                             Selenium.Finalizar();
+                            retry_workflow = 0;
                             continue;
                         }
 
@@ -177,11 +180,13 @@ namespace Test
 
                         FileHelpers.SetStatus(code, ".:: 15. Reservado com sucesso");
 
-                        FileHelpers.SetInfos(".:: 16. Enviar e-mail");
 
+                        Selenium.Delay(1000);
+                        FileHelpers.SetInfos(".:: 16. Enviar e-mail...");
                         Mail.Send();
+                        FileHelpers.SetReprocessar(code, ".:: 17. Enviado com sucesso");
 
-                        FileHelpers.SetInfos(".:: 17. Fim: Enviado com sucesso");
+                        retry_workflow = 0;
                     }
                 }
                 catch (Exception error)
@@ -196,14 +201,16 @@ namespace Test
                     {
                         FileHelpers.SetInfos($"Nova tentativa no workflow...{retry_workflow}");
 
-                        Selenium = new SeleniumHelper(new ConfigurationHelper());
+                        CODES_ARRAY = FileHelpers.Pendentes();
 
                         WorkFlow();
                     }
                     else
                     {
                         FileHelpers.SetInfos($"Inicializar...");
-
+                        
+                        retry_workflow = 0;
+                        
                         Start();
                     }
                 }
@@ -217,7 +224,7 @@ namespace Test
             rodobens = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[3]/div/p");
             if (rodobens.Contains("RODOBENS"))
             {
-                FileHelpers.SetInfos(".:: 4. Segundo card achou RODOBENS...");
+                FileHelpers.SetInfos(".:: 4. Segundo card achou RODOBENS");
                 Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[3]/div/div[2]/button");
                 Selenium.Delay(9000);
                 return;
@@ -226,7 +233,7 @@ namespace Test
             rodobens = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[2]/div/p");
             if (rodobens.Contains("RODOBENS"))
             {
-                FileHelpers.SetInfos(".:: 4. Primeiro card achou RODOBENS...");
+                FileHelpers.SetInfos(".:: 4. Primeiro card achou RODOBENS");
                 Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[2]/div/div[2]/button");
                 Selenium.Delay(9000);
                 return;
