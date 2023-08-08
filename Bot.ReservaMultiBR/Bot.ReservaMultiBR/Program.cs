@@ -116,7 +116,7 @@ namespace Test
 
                         FileHelpers.SetInfos(".:: Analisar reservas");
                         Selenium.Delay(9000);
-                       // InicializarEnvioMail(code);
+                        InicializarEnvioMail(code);
 
                         FileHelpers.SetInfos(".:: Nova Reserva");
                         Selenium.Delay(9000);
@@ -196,10 +196,10 @@ namespace Test
                         Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
 
                         FileHelpers.SetInfos(".:: Enviar e-mails...");
-                        Mail.Reserva(code);
                         FileHelpers.SetSucesso(code);
                         FileHelpers.SetReprocessar(code, ".:: Reservado com sucesso");
 
+                        Mail.Reserva(code, false);
                         retry_workflow = 0;
                     }
                 }
@@ -285,7 +285,7 @@ namespace Test
                 {
                     FileHelpers.SetInfos(".:: Enviar e-mails...");
 
-                    Mail.Reserva(code);
+                    Mail.Reserva(code, true);
 
                     FileHelpers.SetSucesso(code);
                 }

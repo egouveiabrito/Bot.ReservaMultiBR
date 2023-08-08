@@ -6,7 +6,7 @@ namespace Bot.ReservaMultiBR.Util
     public static class Mail
     {
         private static List<string> EMAILS = new List<string>();
-        public static void Reserva(string code)
+        public static void Reserva(string code, bool pesquisa)
         {
             try
             {
@@ -21,7 +21,8 @@ namespace Bot.ReservaMultiBR.Util
                 #endif
 
                 mail.IsBodyHtml = true;
-                mail.Subject = $"[Bot] MULT BR - Reserva realizada com sucesso: {code}"; 
+                var fluxo = pesquisa ? "Pesquisa" : "Final";
+                mail.Subject = $"[Bot] MULT BR - Reserva realizada com sucesso: {code}-{fluxo}"; 
                 mail.Body = FileHelpers.TemplateReserva(code);
 
                 using (var smtp = new SmtpClient("smtp.gmail.com"))
