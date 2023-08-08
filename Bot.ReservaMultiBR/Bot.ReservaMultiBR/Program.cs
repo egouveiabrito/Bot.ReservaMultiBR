@@ -105,21 +105,22 @@ namespace Test
                         FileHelpers.SetInfos(".:: Selecionar consorcio");
                         Selenium.GoToUrl(URL_TOKEN);
 
-                        FileHelpers.SetInfos(".:: Procurando o Card RODOBENS...");
+
                         Selenium.Delay(9000);
+                        FileHelpers.SetInfos(".:: Procurando o Card RODOBENS...");
                         Procurar_RODOBENS(Selenium);
 
-                        FileHelpers.SetInfos(".:: Acessar Reserva");
                         Selenium.Delay(9000);
+                        FileHelpers.SetInfos(".:: Acessar Reserva");
                         Selenium.ClickByXPath("/html/body/div/div[2]/div/div[1]/div[1]/nav/div[1]/div[3]/div[5]/div[2]/div");
 
 
-                        FileHelpers.SetInfos(".:: Analisar reservas");
                         Selenium.Delay(9000);
+                        FileHelpers.SetInfos(".:: Analisar reservas");
                         InicializarEnvioMail(code);
 
-                        FileHelpers.SetInfos(".:: Nova Reserva");
                         Selenium.Delay(9000);
+                        FileHelpers.SetInfos(".:: Nova Reserva");
                         Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/div[3]/div/button");
 
                         var existeReserva = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]");
@@ -133,13 +134,13 @@ namespace Test
                             FileHelpers.SetInfos(".:: Buscar as reservas");
                         }
 
-
-                        FileHelpers.SetInfos(".:: Grupo Disponíveis");
                         Selenium.Delay(9000);
+                        FileHelpers.SetInfos(".:: Grupo Disponíveis");
                         Selenium.FillTextBoxByXPath("/html/body/div/div[1]/div/div/div[2]/div[1]/div/div/div[1]/input", code);
 
-                        FileHelpers.SetInfos(".:: Buscar reserva");
+
                         Selenium.Delay(9000);
+                        FileHelpers.SetInfos(".:: Buscar reserva");
                         var vendaDisponivel = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div");
                         if (vendaDisponivel.Contains("Condições de venda não disponíveis"))
                         {
@@ -149,8 +150,8 @@ namespace Test
                             continue;
                         }
 
-                        FileHelpers.SetInfos(".:: Existe Resultado...?");
                         Selenium.Delay(9000);
+                        FileHelpers.SetInfos(".:: Existe Resultado...?");
                         var existeGrupo = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div/div");
                         if (existeGrupo.Contains("Nenhum resultado"))
                         {
@@ -160,8 +161,9 @@ namespace Test
                             continue;
                         }
 
-                        FileHelpers.SetInfos(".:: Existe Contas para esse grupo...?");
+
                         Selenium.Delay(9000);
+                        FileHelpers.SetInfos(".:: Existe Contas para esse grupo...?");
                         var oGrupoNaoTem = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div/div");
                         if (existeGrupo.Contains("Grupo não"))
                         {
@@ -171,28 +173,18 @@ namespace Test
                             continue;
                         }
 
-                        FileHelpers.SetInfos(".:: Clique na lista");
                         Selenium.Delay(1000);
+                        FileHelpers.SetInfos(".:: Clique na lista");
                         Selenium.ClickByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div");
 
-                        FileHelpers.SetInfos(".:: Reservar cota");
+
                         Selenium.Delay(1000);
+                        FileHelpers.SetInfos(".:: Reservar cota");
                         Selenium.ClickById("ButtonReservarCota");
                         Selenium.ClickByXPath("/html/body/div/div[1]/div/div/div[3]/div[2]/button[2]");
 
-                        FileHelpers.SetInfos(".:: Validar limite maximo de reservas");
-                        Selenium.Delay(9000);
-                        var utrapassouLimte = Selenium.GetTextByXPath("/html/body/div/div[2]/div/div/div[1]");
-                        if (utrapassouLimte.Contains("ATENÇÃO"))
-                        {
-                            FileHelpers.SetReprocessar(code, ".:: Foi ultrapassada a quantidade máxima de reservas de cotas em estoque para este usuário.\n");
-                            Selenium.Finalizar();
-                            retry_workflow = 0;
-                            continue;
-                        }
-
-                        FileHelpers.SetInfos(".:: Confirmar");
                         Selenium.Delay(1000);
+                        FileHelpers.SetInfos(".:: Confirmar");
                         Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
 
                         FileHelpers.SetInfos(".:: Enviar e-mails...");
@@ -200,6 +192,7 @@ namespace Test
                         FileHelpers.SetReprocessar(code, ".:: Reservado com sucesso");
 
                         Mail.Reserva(code, false);
+
                         retry_workflow = 0;
                     }
                 }
@@ -260,24 +253,11 @@ namespace Test
 
         private static void InicializarEnvioMail(string code)
         {
-            var pendentes = FileHelpers.Pendentes();
+            var buscar = string.Empty;
 
             var sucesso = FileHelpers.Sucesso();
-
-            Selenium.Delay(1000);
-            Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/div[1]/button");
-
-            Selenium.Delay(1000);
-            Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/form/div[2]/div[1]/div/div/div[1]/button");
-
-            Selenium.Delay(1000);
-            Selenium.FillTextBoxById("input-304", code);
-
-            Selenium.Delay(1000);
-            Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/form/div[2]/div[2]/div/div/div[1]/button");
-
-            Selenium.Delay(1000);
-            var buscar = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/div[2]");
+           
+             buscar = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/div[2]");
 
             if (buscar.Contains(code))
             {
@@ -285,9 +265,9 @@ namespace Test
                 {
                     FileHelpers.SetInfos(".:: Enviar e-mails...");
 
-                    Mail.Reserva(code, true);
-
                     FileHelpers.SetSucesso(code);
+
+                    Mail.Reserva(code, true);
                 }
             }
         }
