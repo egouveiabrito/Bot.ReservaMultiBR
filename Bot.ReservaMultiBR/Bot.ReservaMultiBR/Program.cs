@@ -116,7 +116,7 @@ namespace Test
 
                         FileHelpers.SetInfos(".:: Analisar reservas");
                         Selenium.Delay(9000);
-                        InicializarEnvioMail(code);
+                       // InicializarEnvioMail(code);
 
                         FileHelpers.SetInfos(".:: Nova Reserva");
                         Selenium.Delay(9000);
@@ -175,11 +175,10 @@ namespace Test
                         Selenium.Delay(1000);
                         Selenium.ClickByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div");
 
-                        FileHelpers.SetInfos(".:: Reservar conta");
+                        FileHelpers.SetInfos(".:: Reservar cota");
                         Selenium.Delay(1000);
                         Selenium.ClickById("ButtonReservarCota");
                         Selenium.ClickByXPath("/html/body/div/div[1]/div/div/div[3]/div[2]/button[2]");
-
 
                         FileHelpers.SetInfos(".:: Validar limite maximo de reservas");
                         Selenium.Delay(9000);
@@ -196,8 +195,9 @@ namespace Test
                         Selenium.Delay(1000);
                         Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
 
-                        Selenium.Delay(9000);
-                        Selenium.GetTextByXPath("/html/body/div/div[2]/div/div[1]/div[1]/main/div/div/div/div[2]/div[3]/div/div/div/h2");
+                        FileHelpers.SetInfos(".:: Enviar e-mails...");
+                        Mail.Reserva(code);
+                        FileHelpers.SetSucesso(code);
                         FileHelpers.SetReprocessar(code, ".:: Reservado com sucesso");
 
                         retry_workflow = 0;
@@ -277,7 +277,6 @@ namespace Test
             Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/form/div[2]/div[2]/div/div/div[1]/button");
 
             Selenium.Delay(1000);
-
             var buscar = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/div[2]");
 
             if (buscar.Contains(code))
