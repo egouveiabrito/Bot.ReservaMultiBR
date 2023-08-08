@@ -15,6 +15,8 @@ namespace Test
 
         public static void Main()
         {
+            FileHelpers.CreateDirectorys();
+
             Start();
         }
 

@@ -14,7 +14,7 @@ namespace Bot.ReservaMultiBR.Util
 
             Directory.CreateDirectory(Paths.ERRORS);
 
-            Directory.CreateDirectory(Paths.INFOS);
+
         }
         public static List<string> Pendentes()
         {
@@ -70,7 +70,7 @@ namespace Bot.ReservaMultiBR.Util
 
         public static void SetSucesso(string code)
         {
-            List<string> pendentes = Pendentes();
+            List<string> pendentes = Sucesso();
 
             using (StreamWriter writer = new StreamWriter(Paths.SUCESSO))
             {
