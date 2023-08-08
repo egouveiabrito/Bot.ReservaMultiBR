@@ -21,14 +21,19 @@ namespace AutomationTest.Core
         }
         public string GetUrl()
         {
+            int index = 10;
+
             string url = string.Empty;
 
             while (true)
             {
+                if (index > 10) break;
+
                 if (WebDriver.Url.Contains("login_escritorio")){
                     url = WebDriver.Url;
                     break;
                 }
+                index++;
             }
 
             return url;
