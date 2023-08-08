@@ -35,8 +35,10 @@ namespace Test
 
                 if (CODES_ARRAY?.Count > 0)
                 {
-                    FileHelpers.SetInfos(".:: 3. Login");
+                    FileHelpers.SetInfos(".:: 2. Grupos para procurar: " + string.Join(",", CODES_ARRAY));
                     Selenium.GoToUrl("https://edigital.rodobens.com.br/parceiros/home");
+                    
+                    FileHelpers.SetInfos(".:: 3. Login");
                     Selenium.FillTextBoxById("signInName", "23539897000121");
                     Selenium.FillTextBoxById("password", "Lousada@0409");
                     Selenium.ClickById("next");
@@ -55,8 +57,9 @@ namespace Test
                     FileHelpers.SetInfos(".:: 7. Feito");
                     Selenium.Finalizar();
 
-                    WorkFlow(); // iniciar processo
-                    Restart(30 * 60 * 1000); // proxima execução em 30 minutos
+                    WorkFlow();
+
+                    Restart(30 * 60 * 1000);
                 }
                 else
                 {
@@ -97,7 +100,7 @@ namespace Test
                         if (code.Length <= 2) continue;
 
                         Selenium = new SeleniumHelper(new ConfigurationHelper());
-
+                        
                         FileHelpers.SetInfos(".:: 1. Inicio de tentativa de reserva: " + code);
                         FileHelpers.SetInfos(".:: 2. Selecionar consorcio");
                         Selenium.GoToUrl(URL_TOKEN);

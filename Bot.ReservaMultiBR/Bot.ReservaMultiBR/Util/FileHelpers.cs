@@ -56,11 +56,7 @@ namespace Bot.ReservaMultiBR.Util
                     writer.WriteLine(item);
                 }
 
-                String line = string.Empty;
-
-                line = code + ";";
-                
-                writer.WriteLine(line);
+                writer.WriteLine(code);
 
                 writer.Close();
             }

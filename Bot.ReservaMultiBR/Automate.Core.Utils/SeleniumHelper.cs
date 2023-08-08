@@ -4,6 +4,7 @@ using OpenQA.Selenium.Support.UI;
 using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 using OpenQA.Selenium.Chrome;
 using System.Drawing;
+using System.Security.Policy;
 
 namespace AutomationTest.Core
 {
@@ -20,7 +21,17 @@ namespace AutomationTest.Core
         }
         public string GetUrl()
         {
-            return WebDriver.Url;
+            string url = string.Empty;
+
+            while (true)
+            {
+                if (WebDriver.Url.Contains("login_escritorio")){
+                    url = WebDriver.Url;
+                    break;
+                }
+            }
+
+            return url;
         }
         public void GoToUrl(string url)
         {
