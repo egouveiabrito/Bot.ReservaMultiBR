@@ -14,7 +14,6 @@ namespace Bot.ReservaMultiBR.Util
 
             Directory.CreateDirectory(Paths.ERRORS);
 
-
         }
         public static List<string> Pendentes()
         {
