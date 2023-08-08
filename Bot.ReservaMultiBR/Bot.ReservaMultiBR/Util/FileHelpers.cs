@@ -61,7 +61,7 @@ namespace Bot.ReservaMultiBR.Util
             }
             catch
             {
-                SetErrors(".:: Erro ao obter os grupos pendentes. Favor verificar o arquivo pendentes.csv");
+                SetErrors(".:: Erro ao obter os grupos pendentes. Favor verificar o arquivo sucesso.csv");
             }
 
             return sucesso;
