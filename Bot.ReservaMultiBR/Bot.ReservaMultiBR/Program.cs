@@ -15,6 +15,8 @@ namespace Test
 
         public static void Main()
         {
+            Mail.Info(".:: Robô Inicializado ::.");
+
             FileHelpers.CreateDirectorys();
 
             Start();
@@ -215,7 +217,7 @@ namespace Test
 
                         CODES_ARRAY = FileHelpers.Pendentes();
 
-                        Mail.Log($"retry_workflow {retry_workflow}");
+                        Mail.Info($"retry_workflow {retry_workflow}");
 
                         WorkFlow();
                     }
@@ -223,7 +225,7 @@ namespace Test
                     {
                         FileHelpers.SetInfos($"Inicializar...");
 
-                        Mail.Log($"Inicializar...");
+                        Mail.Info($"Inicializar...");
 
                         retry_workflow = 0;
 
@@ -284,7 +286,7 @@ namespace Test
                 {
                     FileHelpers.SetInfos(".:: Enviar e-mails...");
 
-                    Mail.Send(code);
+                    Mail.Reserva(code);
 
                     FileHelpers.SetSucesso(code);
                 }

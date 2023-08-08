@@ -14,6 +14,11 @@
 
         //E-mails de confirmação de reserva
         public static string EMAIL = @"C:\bot\config\config.csv";
+
+        public static string TEMPLATE_RESERVA = @"C:\bot\config\email.html";
+
+        public static string TEMPLATE_ALERT = @"C:\bot\config\alert.html";
+
     }
 }
 

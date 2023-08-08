@@ -6,13 +6,12 @@ namespace Bot.ReservaMultiBR.Util
     public static class Mail
     {
         private static List<string> EMAILS = new List<string>();
-        public static void Send(string code)
+        public static void Reserva(string code)
         {
             try
             {
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress("multibrreservas@gmail.com");
-
                 Email();
 
                 #if DEBUG
@@ -21,9 +20,9 @@ namespace Bot.ReservaMultiBR.Util
                     foreach (string email in EMAILS) mail.To.Add(email);
                 #endif
 
-                mail.Subject = $"[Bot] - Reserva realizada com sucesso: {code}"; 
-
-                mail.Body = $"Olá, reserva realizada com sucesso: {code}";
+                mail.IsBodyHtml = true;
+                mail.Subject = $"[Bot] MULT BR - Reserva realizada com sucesso: {code}"; 
+                mail.Body = FileHelpers.TemplateReserva(code);
 
                 using (var smtp = new SmtpClient("smtp.gmail.com"))
                 {
@@ -41,17 +40,18 @@ namespace Bot.ReservaMultiBR.Util
             }
         }
 
-        public static void Log(string message)
+        public static void Error(string message)
         {
-
             try
             {
                 MailMessage mail = new MailMessage();
 
                 mail.From = new MailAddress("multibrreservas@gmail.com");
                 mail.To.Add("edsongouveiabrito@gmail.com");
-                mail.Subject = "[Bot] - Log";
-                mail.Body = message;
+                mail.Subject = $"[Bot] MULT BR - Erro";
+                mail.Body = FileHelpers.TemplateInfo(message, "ERROR");
+                mail.IsBodyHtml = true;
+
                 using (var smtp = new SmtpClient("smtp.gmail.com"))
                 {
                     smtp.EnableSsl = true;
@@ -67,6 +67,36 @@ namespace Bot.ReservaMultiBR.Util
                 FileHelpers.SetErrors(error?.Message);
             }
         }
+
+
+        public static void Info(string message)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+
+                mail.From = new MailAddress("multibrreservas@gmail.com");
+                mail.To.Add("edsongouveiabrito@gmail.com");
+                mail.Subject = $"[Bot] MULT BR - INFO";
+                mail.Body = FileHelpers.TemplateInfo(message, "INFO");
+                mail.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient("smtp.gmail.com"))
+                {
+                    smtp.EnableSsl = true;
+                    smtp.Port = 587;
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new NetworkCredential("multibrreservas@gmail.com", "ribgpxyclxarrioq");
+                    smtp.Send(mail);
+                }
+            }
+            catch (Exception error)
+            {
+                FileHelpers.SetErrors(error?.Message);
+            }
+        }
+
 
         private static void Email()
         {

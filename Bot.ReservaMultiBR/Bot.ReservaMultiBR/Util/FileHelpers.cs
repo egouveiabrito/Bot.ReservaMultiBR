@@ -1,6 +1,4 @@
 ﻿
-using System.IO;
-
 namespace Bot.ReservaMultiBR.Util
 {
     public static class FileHelpers
@@ -15,6 +13,39 @@ namespace Bot.ReservaMultiBR.Util
             Directory.CreateDirectory(Paths.ERRORS);
 
         }
+
+        public static string TemplateReserva(string code)
+        {
+            StreamReader str = new StreamReader(Paths.TEMPLATE_RESERVA);
+            
+            string MailText = str.ReadToEnd();
+
+            MailText = MailText.Replace("#CODE", code);
+
+            MailText = MailText.Replace("#DataHora", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+
+            str.Close();
+
+            return MailText;
+        }
+
+        public static string TemplateInfo(string alert, string titulo)
+        {
+            StreamReader str = new StreamReader(Paths.TEMPLATE_ALERT);
+
+            string MailText = str.ReadToEnd();
+
+            MailText = MailText.Replace("#titulo", titulo);
+
+            MailText = MailText.Replace("#alert", alert);
+
+            MailText = MailText.Replace("#DataHora", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+
+            str.Close();
+
+            return MailText;
+        }
+
         public static List<string> Pendentes()
         {
             List<string> pendentes = new List<string>();
@@ -124,7 +155,7 @@ namespace Bot.ReservaMultiBR.Util
 
             File.AppendAllText($@"{Paths.ERRORS}\errors.txt", $@"{line}" + Environment.NewLine);
 
-            Mail.Log(error);
+            Mail.Error(error);
         }
 
         public static void SetInfos(string infos)
