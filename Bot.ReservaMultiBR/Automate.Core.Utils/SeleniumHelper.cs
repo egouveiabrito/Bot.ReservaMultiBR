@@ -118,6 +118,11 @@ namespace AutomationTest.Core
             var field = Wait.Until(ExpectedConditions.ElementIsVisible(By.Id(fieldId)));
             field.SendKeys(value);
         }
+        public void ClearTextBoxById(string fieldId)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)WebDriver;
+            string execute = (string)js.ExecuteScript("document.getElementById('input-435').value = ''");
+        }
         public void FillTextBoxByXPath(string fieldId, string value)
         {
             var field = Wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(fieldId)));

@@ -6,9 +6,8 @@ namespace Bot.ReservaMultiBR.Util
     public static class Mail
     {
         private static List<string> EMAILS = new List<string>();
-        public static void Send()
+        public static void Send(string code)
         {
-
             try
             {
                 MailMessage mail = new MailMessage();
@@ -16,15 +15,16 @@ namespace Bot.ReservaMultiBR.Util
 
                 Email();
 
-                foreach (string email in EMAILS)
-                {
-                    mail.To.Add(email);
-                }
+                #if DEBUG
+                    mail.To.Add("edsongouveiabrito@gmail.com");
+                #else
+                    foreach (string email in EMAILS) mail.To.Add(email);
+                #endif
 
-                mail.Subject = "[Bot] - Relatório de status das tentativas de reservas"; // assunto
-                mail.Body = "Segue em anexo";
+                mail.Subject = $"[Bot] - Reserva realizada com sucesso: {code}"; 
 
-                mail.Attachments.Add(new Attachment(@"C:\Bot\status\status.txt"));
+                mail.Body = $"Olá, reserva realizada com sucesso: {code}";
+
                 using (var smtp = new SmtpClient("smtp.gmail.com"))
                 {
                     smtp.EnableSsl = true;

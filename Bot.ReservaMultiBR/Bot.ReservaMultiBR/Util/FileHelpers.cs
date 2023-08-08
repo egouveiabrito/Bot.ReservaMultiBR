@@ -19,6 +19,7 @@ namespace Bot.ReservaMultiBR.Util
         public static List<string> Pendentes()
         {
             List<string> pendentes = new List<string>();
+
             try
             {
                 string[] lines = File.ReadAllLines(Paths.PENDENTES);
@@ -39,6 +40,51 @@ namespace Bot.ReservaMultiBR.Util
             }
 
             return pendentes;
+        }
+
+        public static List<string> Sucesso()
+        {
+            List<string> sucesso = new List<string>();
+
+            try
+            {
+                string[] lines = File.ReadAllLines(Paths.SUCESSO);
+
+                for (int index = 0; index < lines.Count(); index++)
+                {
+                    string[] columns = lines[index].Split(',');
+
+                    foreach (string column in columns)
+                    {
+                        sucesso.Add(column.Trim());
+                    }
+                }
+            }
+            catch
+            {
+                SetErrors(".:: Erro ao obter os grupos pendentes. Favor verificar o arquivo pendentes.csv");
+            }
+
+            return sucesso;
+        }
+
+        public static void SetSucesso(string code)
+        {
+            List<string> pendentes = Pendentes();
+
+            using (StreamWriter writer = new StreamWriter(Paths.SUCESSO))
+            {
+                foreach (var item in pendentes)
+                {
+                    if (item == code) continue;
+
+                    writer.WriteLine(item);
+                }
+
+                writer.WriteLine(code);
+
+                writer.Close();
+            }
         }
 
         public static void SetReprocessar(string code, string status)
