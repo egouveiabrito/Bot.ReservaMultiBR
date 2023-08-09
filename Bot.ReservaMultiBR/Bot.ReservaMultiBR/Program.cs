@@ -84,7 +84,7 @@ namespace Test
 
         private static void Restart(int timer = 10000)
         {
-            Selenium.Delay(9000);
+            Selenium.Delay(5000);
             Selenium.Finalizar();
             FileHelpers.SetInfos(".:: Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
             Thread.Sleep(timer);
