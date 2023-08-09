@@ -14,7 +14,7 @@ namespace Bot.ReservaMultiBR.Util
 
         }
 
-        public static string TemplateReserva(string code)
+        public static string TemplateReserva(string code, AdministradoraEnum administradora)
         {
             StreamReader str = new StreamReader(Paths.TEMPLATE_RESERVA);
             
@@ -23,6 +23,17 @@ namespace Bot.ReservaMultiBR.Util
             MailText = MailText.Replace("#CODE", code);
 
             MailText = MailText.Replace("#DataHora", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+
+            switch (administradora)
+            {
+                case AdministradoraEnum.RODOBENS:
+                    MailText = MailText.Replace("#Administradora", "RODOBENS A DE CONSORCIOS LTDA");
+                    break;
+                case AdministradoraEnum.MECEDES_BENS:
+                    break;
+                default:
+                    break;
+            }
 
             str.Close();
 

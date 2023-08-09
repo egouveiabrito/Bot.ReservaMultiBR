@@ -188,12 +188,13 @@ namespace Test
                         Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
 
                         FileHelpers.SetInfos(".:: Enviar e-mails...");
+                        Mail.Reserva(code, AdministradoraEnum.RODOBENS);
+
                         FileHelpers.SetSucesso(code);
                         FileHelpers.SetReprocessar(code, ".:: Reservado com sucesso");
 
-                        Mail.Reserva(code, false);
-
                         retry_workflow = 0;
+                        continue;
                     }
                 }
                 catch (Exception error)
@@ -210,14 +211,10 @@ namespace Test
 
                         CODES_ARRAY = FileHelpers.Pendentes();
 
-                        Mail.Info($"retry_workflow {retry_workflow}");
-
                         WorkFlow();
                     }
                     else
                     {
-                        FileHelpers.SetInfos($"Inicializar...");
-
                         Mail.Info($"Inicializar...");
 
                         retry_workflow = 0;
@@ -256,8 +253,8 @@ namespace Test
             var buscar = string.Empty;
 
             var sucesso = FileHelpers.Sucesso();
-           
-             buscar = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/div[2]");
+
+            buscar = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/div[2]");
 
             if (buscar.Contains(code))
             {
@@ -267,7 +264,7 @@ namespace Test
 
                     FileHelpers.SetSucesso(code);
 
-                    Mail.Reserva(code, true);
+                    Mail.Reserva(code, AdministradoraEnum.RODOBENS);
                 }
             }
         }
