@@ -15,9 +15,13 @@ namespace Test
 
         public static void Main()
         {
+            Console.Title = "..:::: MULT BR  ::::..";
+
+            Console.Write("Aperte ENTER para começar...", Console.ForegroundColor = ConsoleColor.DarkGreen);
+
+            Console.ReadKey();
+
             Shared.Inicializar();
-           
-            Mail.Info(".:: Robô Inicializado ::.");
 
             FileHelpers.CreateDirectorys();
 
@@ -28,11 +32,12 @@ namespace Test
         {
             try
             {
-                Console.Title = "..:::: MULT BR  ::::..";
                 CODES_ARRAY = FileHelpers.Pendentes();
 
                 if (CODES_ARRAY?.Count > 0)
                 {
+                    Mail.Info(".:: Robô Inicializado ::.");
+
                     Console.Clear();
                     Console.WriteLine(Environment.NewLine);
                     Console.WriteLine("..:::: MULT BR SERVICOS FINANCEIROS LTDA ::::.." + Environment.NewLine);
@@ -42,6 +47,7 @@ namespace Test
                     FileHelpers.SetInfos(".:: Grupos para procurar: " + string.Join(",", CODES_ARRAY));
                     Selenium.GoToUrl("https://edigital.rodobens.com.br/parceiros/home");
 
+                    Selenium.Delay(9000);
                     FileHelpers.SetInfos(".:: Login");
                     Selenium.FillTextBoxById("signInName", "23539897000121");
                     Selenium.FillTextBoxById("password", "Lousada@0409");
@@ -82,12 +88,11 @@ namespace Test
             }
         }
 
-        private static void Restart(int timer = 10000)
+        private static void Restart(int timer = 5000)
         {
-            Selenium.Delay(5000);
             Selenium.Finalizar();
             FileHelpers.SetInfos(".:: Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
-            Thread.Sleep(timer);
+            Selenium.Delay(timer);
             Selenium = new SeleniumHelper(new ConfigurationHelper());
             Start();
         }

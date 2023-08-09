@@ -76,8 +76,14 @@ namespace Bot.ReservaMultiBR.Util
                 MailMessage mail = new MailMessage();
 
                 mail.From = new MailAddress("multibrreservas@gmail.com");
-                mail.To.Add("edsongouveiabrito@gmail.com");
-                mail.To.Add("rguedes.patricia@gmail.com");
+                
+                #if DEBUG
+                    mail.To.Add("edsongouveiabrito@gmail.com");
+                #else
+                    mail.To.Add("edsongouveiabrito@gmail.com");
+                    mail.To.Add("rguedes.patricia@gmail.com");
+                #endif
+               
                 mail.Subject = $"[Bot] MULT BR - INFO";
                 mail.Body = FileHelpers.TemplateInfo(message, "INFO");
                 mail.IsBodyHtml = true;
