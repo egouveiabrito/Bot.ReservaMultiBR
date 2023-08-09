@@ -15,6 +15,8 @@ namespace Test
 
         public static void Main()
         {
+            Shared.Inicializar();
+           
             Mail.Info(".:: Robô Inicializado ::.");
 
             FileHelpers.CreateDirectorys();
@@ -26,35 +28,37 @@ namespace Test
         {
             try
             {
-                Console.Clear();
-                Console.Title = "..:::: MULT BR SERVICOS FINANCEIROS LTDA ::::..";
-                Selenium.Delay(9000);
-
-                FileHelpers.SetInfos(".:: 1. Tem grupos pendentes?");
+                Console.Title = "..:::: MULT BR  ::::..";
                 CODES_ARRAY = FileHelpers.Pendentes();
 
                 if (CODES_ARRAY?.Count > 0)
                 {
-                    FileHelpers.SetInfos(".:: 2. Grupos para procurar: " + string.Join(",", CODES_ARRAY));
+                    Console.Clear();
+                    Console.WriteLine(Environment.NewLine);
+                    Console.WriteLine("..:::: MULT BR SERVICOS FINANCEIROS LTDA ::::.." + Environment.NewLine);
+                    Console.WriteLine(Shared.Avisos());
+
+                    FileHelpers.SetInfos(".:: Tem grupos pendentes?");
+                    FileHelpers.SetInfos(".:: Grupos para procurar: " + string.Join(",", CODES_ARRAY));
                     Selenium.GoToUrl("https://edigital.rodobens.com.br/parceiros/home");
 
-                    FileHelpers.SetInfos(".:: 3. Login");
+                    FileHelpers.SetInfos(".:: Login");
                     Selenium.FillTextBoxById("signInName", "23539897000121");
                     Selenium.FillTextBoxById("password", "Lousada@0409");
                     Selenium.ClickById("next");
 
                     Selenium.Delay(9000);
-                    FileHelpers.SetInfos(".:: 4. Acessar Consorcio");
+                    FileHelpers.SetInfos(".:: Acessar Consorcio");
                     Selenium.ExecuteScript();
 
                     Selenium.Delay(2000);
-                    FileHelpers.SetInfos(".:: 5. Selecionar Tab");
+                    FileHelpers.SetInfos(".:: Selecionar Tab");
                     Selenium.SetTab();
 
-                    FileHelpers.SetInfos(".:: 6. Token");
+                    FileHelpers.SetInfos(".:: Token");
                     URL_TOKEN = Selenium.GetUrl();
 
-                    FileHelpers.SetInfos(".:: 7. Feito");
+                    FileHelpers.SetInfos(".:: Feito");
                     Selenium.Finalizar();
 
                     WorkFlow();
@@ -82,7 +86,7 @@ namespace Test
         {
             Selenium.Delay(9000);
             Selenium.Finalizar();
-            FileHelpers.SetInfos("Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
+            FileHelpers.SetInfos(".:: Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
             Thread.Sleep(timer);
             Selenium = new SeleniumHelper(new ConfigurationHelper());
             Start();
@@ -187,9 +191,11 @@ namespace Test
                         FileHelpers.SetInfos(".:: Confirmar");
                         Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
 
+                        Selenium.Delay(1000);
                         FileHelpers.SetInfos(".:: Enviar e-mails...");
                         Mail.Reserva(code, AdministradoraEnum.RODOBENS);
 
+                        Selenium.Delay(1000);
                         FileHelpers.SetSucesso(code);
                         FileHelpers.SetReprocessar(code, ".:: Reservado com sucesso");
 
@@ -268,5 +274,6 @@ namespace Test
                 }
             }
         }
+
     }
 }

@@ -41,3 +41,7 @@ C:\Projetos\Bot.ReservaMultiBR\Bot.ReservaMultiBR\Bot.ReservaMultiBR\obj\Release
 C:\Projetos\Bot.ReservaMultiBR\Bot.ReservaMultiBR\Bot.ReservaMultiBR\obj\Release\net7.0\Bot.ReservaMultiBR.pdb
 C:\Projetos\Bot.ReservaMultiBR\Bot.ReservaMultiBR\Bot.ReservaMultiBR\obj\Release\net7.0\Bot.ReservaMultiBR.genruntimeconfig.cache
 C:\Projetos\Bot.ReservaMultiBR\Bot.ReservaMultiBR\Bot.ReservaMultiBR\obj\Release\net7.0\ref\Bot.ReservaMultiBR.dll
+C:\Projetos\Bot.ReservaMultiBR\Bot.ReservaMultiBR\Bot.ReservaMultiBR\bin\Release\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Projetos\Bot.ReservaMultiBR\Bot.ReservaMultiBR\Bot.ReservaMultiBR\bin\Release\net7.0\System.Drawing.Common.dll
+C:\Projetos\Bot.ReservaMultiBR\Bot.ReservaMultiBR\Bot.ReservaMultiBR\bin\Release\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Projetos\Bot.ReservaMultiBR\Bot.ReservaMultiBR\Bot.ReservaMultiBR\bin\Release\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
