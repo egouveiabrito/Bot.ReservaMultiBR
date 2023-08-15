@@ -140,7 +140,6 @@ namespace Factory.Rodobens
                         {
                             FileHelpers.SetReprocessar(code, ".:: Condições de venda não disponíveis\n", AdministradoraEnum.RODOBENS);
                             Selenium.Finalizar();
-                            retry_workflow = 0;
                             continue;
                         }
 
@@ -151,7 +150,6 @@ namespace Factory.Rodobens
                         {
                             FileHelpers.SetReprocessar(code, ".:: Nenhum resultado", AdministradoraEnum.RODOBENS);
                             Selenium.Finalizar();
-                            retry_workflow = 0;
                             continue;
                         }
 
@@ -163,7 +161,6 @@ namespace Factory.Rodobens
                         {
                             FileHelpers.SetReprocessar(code, ".:: O Grupo não tem contas\n", AdministradoraEnum.RODOBENS);
                             Selenium.Finalizar();
-                            retry_workflow = 0;
                             continue;
                         }
 
@@ -188,8 +185,6 @@ namespace Factory.Rodobens
                         Selenium.Delay(1000);
                         FileHelpers.SetSucesso(code, AdministradoraEnum.RODOBENS);
                         FileHelpers.SetReprocessar(code, ".:: Reservado com sucesso", AdministradoraEnum.RODOBENS);
-
-                        retry_workflow = 0;
 
                         Selenium.Dispose();
 
