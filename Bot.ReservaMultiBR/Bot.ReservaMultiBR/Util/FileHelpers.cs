@@ -5,13 +5,11 @@ namespace Bot.ReservaMultiBR.Util
     {
         public static void CreateDirectorys()
         {
-
             Directory.CreateDirectory(Paths.INFOS);
 
             Directory.CreateDirectory(Paths.STATUS);
 
             Directory.CreateDirectory(Paths.ERRORS);
-
         }
 
         public static string TemplateReserva(string code, AdministradoraEnum administradora)
@@ -28,10 +26,11 @@ namespace Bot.ReservaMultiBR.Util
             {
                 case AdministradoraEnum.RODOBENS:
                     MailText = MailText.Replace("#Administradora", "RODOBENS A DE CONSORCIOS LTDA");
+                    MailText = MailText.Replace("#reservas", "https://rodobens.escritoriodigitalparceiro.com.br/Sistema/#/reservas");
                     break;
-                case AdministradoraEnum.MECEDES_BENS:
-                    break;
-                default:
+                case AdministradoraEnum.PORTOBENS:
+                    MailText = MailText.Replace("#Administradora", "PORTOBENS A DE CONSORCIOS LTDA");
+                    MailText = MailText.Replace("#reservas", "https://cmb.escritoriodigitalparceiro.com.br/Sistema/#/reservas");
                     break;
             }
 
@@ -57,13 +56,13 @@ namespace Bot.ReservaMultiBR.Util
             return MailText;
         }
 
-        public static List<string> Pendentes()
+        public static List<string> Pendentes(AdministradoraEnum administradora)
         {
             List<string> pendentes = new List<string>();
 
             try
             {
-                string[] lines = File.ReadAllLines(Paths.PENDENTES);
+                string[] lines = File.ReadAllLines(PendentesPath(administradora));
 
                 for (int index = 0; index < lines.Count(); index++)
                 {
@@ -83,13 +82,13 @@ namespace Bot.ReservaMultiBR.Util
             return pendentes;
         }
 
-        public static List<string> Sucesso()
+        public static List<string> Sucesso(AdministradoraEnum administradora)
         {
             List<string> sucesso = new List<string>();
 
             try
             {
-                string[] lines = File.ReadAllLines(Paths.SUCESSO);
+                string[] lines = File.ReadAllLines(SucessoPath(administradora));
 
                 for (int index = 0; index < lines.Count(); index++)
                 {
@@ -109,11 +108,11 @@ namespace Bot.ReservaMultiBR.Util
             return sucesso;
         }
 
-        public static void SetSucesso(string code)
+        public static void SetSucesso(string code, AdministradoraEnum administradora)
         {
-            List<string> pendentes = Sucesso();
+            List<string> pendentes = Sucesso(administradora);
 
-            using (StreamWriter writer = new StreamWriter(Paths.SUCESSO))
+            using (StreamWriter writer = new StreamWriter(SucessoPath(administradora)))
             {
                 foreach (var item in pendentes)
                 {
@@ -128,13 +127,13 @@ namespace Bot.ReservaMultiBR.Util
             }
         }
 
-        public static void SetReprocessar(string code, string status)
+        public static void SetReprocessar(string code, string status, AdministradoraEnum administradora)
         {
             SetStatus(code, status);
 
-            List<string> pendentes = Pendentes();
+            List<string> pendentes = Pendentes(administradora);
 
-            using (StreamWriter writer = new StreamWriter(Paths.PENDENTES))
+            using (StreamWriter writer = new StreamWriter(PendentesPath(administradora)))
             {
                 foreach (var item in pendentes)
                 {
@@ -176,6 +175,34 @@ namespace Bot.ReservaMultiBR.Util
             Console.WriteLine(line);
 
             File.AppendAllText($@"{Paths.INFOS}\infos.txt", $@"{line}" + Environment.NewLine);
+        }
+
+        public static string SucessoPath(AdministradoraEnum administradora)
+        {
+            switch (administradora)
+            {
+                case AdministradoraEnum.RODOBENS:
+                    return Paths.SUCESSO_RODOBENS;
+                case AdministradoraEnum.PORTOBENS:
+                    return Paths.SUCESSO_PORTOBENS;
+
+                default:
+                    return "";
+            }
+        }
+
+        public static string PendentesPath(AdministradoraEnum administradora)
+        {
+            switch (administradora)
+            {
+                case AdministradoraEnum.RODOBENS:
+                    return Paths.PENDENTES_RODOBENS;
+                case AdministradoraEnum.PORTOBENS:
+                    return Paths.PENDENTES_PORTOBENS;
+
+                default:
+                    return "";
+            }
         }
     }
 }

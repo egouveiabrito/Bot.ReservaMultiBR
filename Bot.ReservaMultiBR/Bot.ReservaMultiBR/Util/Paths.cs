@@ -6,11 +6,13 @@
         public static string ERRORS = @"C:\bot\errors";
         public static string STATUS = @"C:\bot\status";
 
-        // Arquivo nao pode ser excluido
-        public static string PENDENTES = @"C:\bot\pendentes\pendentes.csv";
+        // Rodobens
+        public static string PENDENTES_RODOBENS = @"C:\bot\pendentes\pendentes_rodobens.csv";
+        public static string SUCESSO_RODOBENS = @"C:\bot\sucesso\sucesso_rodobens.csv";
 
-        // Arquivo nao pode ser excluido
-        public static string SUCESSO = @"C:\bot\sucesso\sucesso.csv";
+        // Portobens
+        public static string PENDENTES_PORTOBENS = @"C:\bot\pendentes\pendentes_portobens.csv";
+        public static string SUCESSO_PORTOBENS = @"C:\bot\sucesso\sucesso_portobens.csv";
 
         //E-mails de confirmação de reserva
         public static string EMAIL = @"C:\bot\config\config.csv";
