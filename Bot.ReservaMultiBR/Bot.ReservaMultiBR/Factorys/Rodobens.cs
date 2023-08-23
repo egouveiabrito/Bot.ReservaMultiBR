@@ -21,11 +21,13 @@ namespace Factory.Rodobens
 
                 if (CODES_ARRAY?.Count > 0)
                 {
+
                     Mail.Info(".:: Inicializado Rodobens ::.");
 
+                    Selenium.Delay(1000);
                     Console.Clear();
-                    Console.WriteLine(Environment.NewLine);
-                    Console.WriteLine("..:::: MULT BR SERVICOS FINANCEIROS LTDA ::::.." + Environment.NewLine);
+
+                    Console.WriteLine("..:::: MULT BR SERVICOS FINANCEIROS LTDA ::::.. RODOBENS" + Environment.NewLine);
                     Console.WriteLine(Shared.Avisos());
 
                     FileHelpers.SetInfos(".:: Tem grupos pendentes?");
@@ -95,7 +97,7 @@ namespace Factory.Rodobens
 
                         Selenium = new SeleniumHelper(new ConfigurationHelper());
 
-                        FileHelpers.SetInfos(".:: Inicio de tentativa de reserva: " + code);
+                        FileHelpers.SetInfos(".:: Inicio de tentativa de reserva: " + code + " na Rodobens");
                         FileHelpers.SetInfos(".:: Selecionar consorcio");
                         Selenium.GoToUrl(URL_TOKEN);
 

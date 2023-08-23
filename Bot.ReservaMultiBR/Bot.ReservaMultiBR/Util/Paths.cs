@@ -14,6 +14,14 @@
         public static string PENDENTES_PORTOBENS = @"C:\bot\pendentes\pendentes_portobens.csv";
         public static string SUCESSO_PORTOBENS = @"C:\bot\sucesso\sucesso_portobens.csv";
 
+        // CNF
+        public static string PENDENTES_CNF = @"C:\bot\pendentes\pendentes_cnf.csv";
+        public static string SUCESSO_CNF = @"C:\bot\sucesso\sucesso_cnf.csv";
+
+        // BRQUALY
+        public static string PENDENTES_BRQUALY = @"C:\bot\pendentes\pendentes_brqualy.csv";
+        public static string SUCESSO_BRQUALY = @"C:\bot\sucesso\sucesso_brqualy.csv";
+
         //E-mails de confirmação de reserva
         public static string EMAIL = @"C:\bot\config\config.csv";
 

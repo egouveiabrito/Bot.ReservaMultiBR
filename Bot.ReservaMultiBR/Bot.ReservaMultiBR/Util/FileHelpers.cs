@@ -15,7 +15,7 @@ namespace Bot.ReservaMultiBR.Util
         public static string TemplateReserva(string code, AdministradoraEnum administradora)
         {
             StreamReader str = new StreamReader(Paths.TEMPLATE_RESERVA);
-            
+
             string MailText = str.ReadToEnd();
 
             MailText = MailText.Replace("#CODE", code);
@@ -28,9 +28,20 @@ namespace Bot.ReservaMultiBR.Util
                     MailText = MailText.Replace("#Administradora", "RODOBENS A DE CONSORCIOS LTDA");
                     MailText = MailText.Replace("#reservas", "https://rodobens.escritoriodigitalparceiro.com.br/Sistema/#/reservas");
                     break;
+
                 case AdministradoraEnum.PORTOBENS:
                     MailText = MailText.Replace("#Administradora", "PORTOBENS A DE CONSORCIOS LTDA");
                     MailText = MailText.Replace("#reservas", "https://cmb.escritoriodigitalparceiro.com.br/Sistema/#/reservas");
+                    break;
+
+                case AdministradoraEnum.CNF:
+                    MailText = MailText.Replace("#Administradora", "CNF A DE CONSORCIOS LTDA");
+                    MailText = MailText.Replace("#reservas", "https://cnf.escritoriodigitalparceiro.com.br/Sistema/#/reservas");
+                    break;
+
+                case AdministradoraEnum.BRQUALY:
+                    MailText = MailText.Replace("#Administradora", "BRQUALY A DE CONSORCIOS LTDA");
+                    MailText = MailText.Replace("#reservas", "https://brqualy.escritoriodigitalparceiro.com.br/Sistema/#/reservas");
                     break;
             }
 
@@ -68,9 +79,11 @@ namespace Bot.ReservaMultiBR.Util
                 {
                     string[] columns = lines[index].Split(',');
 
-                    foreach (string column in columns)
+                    foreach (string code in columns)
                     {
-                        pendentes.Add(column.Trim());
+                        if (code.Length <= 2) continue;
+
+                        pendentes.Add(code.Trim());
                     }
                 }
             }
@@ -183,8 +196,15 @@ namespace Bot.ReservaMultiBR.Util
             {
                 case AdministradoraEnum.RODOBENS:
                     return Paths.SUCESSO_RODOBENS;
+
                 case AdministradoraEnum.PORTOBENS:
                     return Paths.SUCESSO_PORTOBENS;
+
+                case AdministradoraEnum.CNF:
+                    return Paths.SUCESSO_CNF;
+
+                case AdministradoraEnum.BRQUALY:
+                    return Paths.SUCESSO_BRQUALY;
 
                 default:
                     return "";
@@ -197,8 +217,15 @@ namespace Bot.ReservaMultiBR.Util
             {
                 case AdministradoraEnum.RODOBENS:
                     return Paths.PENDENTES_RODOBENS;
+
                 case AdministradoraEnum.PORTOBENS:
                     return Paths.PENDENTES_PORTOBENS;
+
+                case AdministradoraEnum.CNF:
+                    return Paths.PENDENTES_CNF;
+
+                case AdministradoraEnum.BRQUALY:
+                    return Paths.PENDENTES_BRQUALY;
 
                 default:
                     return "";

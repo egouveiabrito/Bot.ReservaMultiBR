@@ -1,9 +1,9 @@
 ﻿using AutomationTest.Core;
 using Bot.ReservaMultiBR.Util;
 
-namespace Factory.Portobens
+namespace Factory.Rodobens
 {
-    public static class Portobens
+    public static class CNF
     {
         private static List<string> CODES_ARRAY = new List<string>();
 
@@ -17,16 +17,17 @@ namespace Factory.Portobens
         {
             try
             {
-                CODES_ARRAY = FileHelpers.Pendentes(AdministradoraEnum.PORTOBENS);
+                CODES_ARRAY = FileHelpers.Pendentes(AdministradoraEnum.CNF);
 
                 if (CODES_ARRAY?.Count > 0)
                 {
-                    Mail.Info(".:: Inicializado Portobens ::.");
+
+                    Mail.Info(".:: Inicializado Rodobens ::.");
 
                     Selenium.Delay(1000);
                     Console.Clear();
 
-                    Console.WriteLine("..:::: MULT BR SERVICOS FINANCEIROS LTDA ::::.. PORTOBENS" + Environment.NewLine);
+                    Console.WriteLine("..:::: MULT BR SERVICOS FINANCEIROS LTDA ::::.. CNF" + Environment.NewLine);
                     Console.WriteLine(Shared.Avisos());
 
                     FileHelpers.SetInfos(".:: Tem grupos pendentes?");
@@ -55,7 +56,7 @@ namespace Factory.Portobens
 
                     WorkFlow();
 
-                    Restart(15 * 60 * 1000);
+                    Restart(30 * 60 * 1000);
                 }
                 else
                 {
@@ -96,14 +97,14 @@ namespace Factory.Portobens
 
                         Selenium = new SeleniumHelper(new ConfigurationHelper());
 
-                        FileHelpers.SetInfos(".:: Inicio de tentativa de reserva: " + code + " na Portobens");
+                        FileHelpers.SetInfos(".:: Inicio de tentativa de reserva: " + code + " na CNF");
                         FileHelpers.SetInfos(".:: Selecionar consorcio");
                         Selenium.GoToUrl(URL_TOKEN);
 
 
                         Selenium.Delay(9000);
-                        FileHelpers.SetInfos(".:: Procurando o Card PORTOBENS...");
-                        Procurar_PORTOBENS(Selenium);
+                        FileHelpers.SetInfos(".:: Procurando o Card CNF...");
+                        Procurar_CNF(Selenium);
 
                         Selenium.Delay(9000);
                         FileHelpers.SetInfos(".:: Acessar Reserva");
@@ -139,7 +140,7 @@ namespace Factory.Portobens
                         var vendaDisponivel = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div");
                         if (vendaDisponivel.Contains("Condições de venda não disponíveis"))
                         {
-                            FileHelpers.SetReprocessar(code, ".:: Condições de venda não disponíveis\n", AdministradoraEnum.PORTOBENS);
+                            FileHelpers.SetReprocessar(code, ".:: Condições de venda não disponíveis\n", AdministradoraEnum.CNF);
                             Selenium.Finalizar();
                             continue;
                         }
@@ -149,7 +150,7 @@ namespace Factory.Portobens
                         var existeGrupo = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div/div");
                         if (existeGrupo.Contains("Nenhum resultado"))
                         {
-                            FileHelpers.SetReprocessar(code, ".:: Nenhum resultado", AdministradoraEnum.PORTOBENS);
+                            FileHelpers.SetReprocessar(code, ".:: Nenhum resultado", AdministradoraEnum.CNF);
                             Selenium.Finalizar();
                             continue;
                         }
@@ -160,7 +161,7 @@ namespace Factory.Portobens
                         var oGrupoNaoTem = Selenium.GetTextByXPath("/html/body/div/div[1]/div/div/div[2]/div[2]/div/div");
                         if (existeGrupo.Contains("Grupo não"))
                         {
-                            FileHelpers.SetReprocessar(code, ".:: O Grupo não tem contas\n", AdministradoraEnum.PORTOBENS);
+                            FileHelpers.SetReprocessar(code, ".:: O Grupo não tem contas\n", AdministradoraEnum.CNF);
                             Selenium.Finalizar();
                             continue;
                         }
@@ -181,11 +182,11 @@ namespace Factory.Portobens
 
                         Selenium.Delay(1000);
                         FileHelpers.SetInfos(".:: Enviar e-mails...");
-                        Mail.Reserva(code, AdministradoraEnum.PORTOBENS);
+                        Mail.Reserva(code, AdministradoraEnum.CNF);
 
                         Selenium.Delay(1000);
-                        FileHelpers.SetSucesso(code, AdministradoraEnum.PORTOBENS);
-                        FileHelpers.SetReprocessar(code, ".:: Reservado com sucesso", AdministradoraEnum.PORTOBENS);
+                        FileHelpers.SetSucesso(code, AdministradoraEnum.CNF);
+                        FileHelpers.SetReprocessar(code, ".:: Reservado com sucesso", AdministradoraEnum.CNF);
 
                         Selenium.Dispose();
 
@@ -204,7 +205,7 @@ namespace Factory.Portobens
                     {
                         FileHelpers.SetInfos($"Nova tentativa no workflow...{retry_workflow}");
 
-                        CODES_ARRAY = FileHelpers.Pendentes(AdministradoraEnum.PORTOBENS);
+                        CODES_ARRAY = FileHelpers.Pendentes(AdministradoraEnum.CNF);
 
                         WorkFlow();
                     }
@@ -216,24 +217,26 @@ namespace Factory.Portobens
             }
         }
 
-        private static void Procurar_PORTOBENS(SeleniumHelper Selenium)
+        private static void Procurar_CNF(SeleniumHelper Selenium)
         {
-            var portobens = string.Empty;
+            var CNF = string.Empty;
 
-            portobens = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[2]/div/p");
-            if (portobens.Contains("PORTOBENS"))
+            CNF = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[5]/div/p");
+
+            if (CNF.Contains("CNF"))
             {
-                FileHelpers.SetInfos(".:: Primeiro card achou PORTOBENS");
-                Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[2]/div/div[2]/button");
+                FileHelpers.SetInfos(".:: Segundo card achou CNF");
+                Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[5]/div/div[2]/button");
                 Selenium.Delay(9000);
                 return;
             }
 
-            portobens = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[3]/div/p");
-            if (portobens.Contains("PORTOBENS"))
+            CNF = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[5]/div/p");
+
+            if (CNF.Contains("CNF"))
             {
-                FileHelpers.SetInfos(".:: Segundo card achou PORTOBENS");
-                Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[3]/div/div[2]/button");
+                FileHelpers.SetInfos(".:: Primeiro card achou CNF");
+                Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[1]/div/div[4]/div/div[2]/button");
                 Selenium.Delay(9000);
                 return;
             }
@@ -243,7 +246,7 @@ namespace Factory.Portobens
         {
             var buscar = string.Empty;
 
-            var sucesso = FileHelpers.Sucesso(AdministradoraEnum.PORTOBENS);
+            var sucesso = FileHelpers.Sucesso(AdministradoraEnum.CNF);
 
             buscar = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[1]/main/div/div/div[1]/div/div[2]");
 
@@ -253,9 +256,9 @@ namespace Factory.Portobens
                 {
                     FileHelpers.SetInfos(".:: Enviar e-mails...");
 
-                    FileHelpers.SetSucesso(code, AdministradoraEnum.PORTOBENS);
+                    FileHelpers.SetSucesso(code, AdministradoraEnum.CNF);
 
-                    Mail.Reserva(code, AdministradoraEnum.PORTOBENS);
+                    Mail.Reserva(code, AdministradoraEnum.CNF);
                 }
             }
         }
