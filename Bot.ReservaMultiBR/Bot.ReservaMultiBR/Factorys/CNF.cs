@@ -56,7 +56,7 @@ namespace Factory.Rodobens
 
                     WorkFlow();
 
-                    Restart(30 * 60 * 1000);
+                    Restart(10 * 60 * 1000);
                 }
                 else
                 {
