@@ -55,7 +55,7 @@ namespace Factory.Portobens
 
                     WorkFlow();
 
-                    Restart(10 * 60 * 1000);
+                    Restart(15 * 60 * 1000);
                 }
                 else
                 {
