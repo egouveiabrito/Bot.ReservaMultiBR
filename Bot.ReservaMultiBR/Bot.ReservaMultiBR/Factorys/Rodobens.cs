@@ -17,6 +17,8 @@ namespace Factory.Rodobens
         {
             try
             {
+                Selenium.Delay(5000);
+                FileHelpers.SetInfos(".:: Buscando arquivos...");
                 CODES_ARRAY = FileHelpers.Pendentes(AdministradoraEnum.RODOBENS);
 
                 if (CODES_ARRAY?.Count > 0)
@@ -57,6 +59,8 @@ namespace Factory.Rodobens
                     WorkFlow();
 
                     Restart(30 * 60 * 1000);
+
+                    return;
                 }
                 else
                 {
@@ -79,7 +83,7 @@ namespace Factory.Rodobens
             }
         }
 
-        private static void Restart(int timer = 5000)
+        private static void Restart(int timer = 7000)
         {
             Selenium.Finalizar();
             
@@ -209,9 +213,9 @@ namespace Factory.Rodobens
                     {
                         FileHelpers.SetInfos($"Nova tentativa no workflow...{retry_workflow}");
 
-                        CODES_ARRAY = FileHelpers.Pendentes(AdministradoraEnum.RODOBENS);
+                        Selenium = new SeleniumHelper(new ConfigurationHelper());
 
-                        WorkFlow();
+                        Start();
                     }
                     else
                     {

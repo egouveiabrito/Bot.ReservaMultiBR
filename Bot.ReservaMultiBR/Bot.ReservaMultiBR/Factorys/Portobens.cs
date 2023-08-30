@@ -17,6 +17,7 @@ namespace Factory.Portobens
         {
             try
             {
+
                 CODES_ARRAY = FileHelpers.Pendentes(AdministradoraEnum.PORTOBENS);
 
                 if (CODES_ARRAY?.Count > 0)
@@ -55,6 +56,9 @@ namespace Factory.Portobens
 
                     WorkFlow();
 
+                    Restart(30 * 60 * 1000);
+
+                    return;
                 }
                 else
                 {
@@ -84,7 +88,6 @@ namespace Factory.Portobens
             FileHelpers.SetInfos(".:: Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
 
             Selenium.Delay(timer);
-
         }
 
         private static void WorkFlow()
@@ -208,9 +211,9 @@ namespace Factory.Portobens
                     {
                         FileHelpers.SetInfos($"Nova tentativa no workflow...{retry_workflow}");
 
-                        CODES_ARRAY = FileHelpers.Pendentes(AdministradoraEnum.PORTOBENS);
+                        Selenium = new SeleniumHelper(new ConfigurationHelper());
 
-                        WorkFlow();
+                        Start();
                     }
                     else
                     {
