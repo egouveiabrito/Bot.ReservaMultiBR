@@ -72,6 +72,8 @@ namespace Factory.Rodobens
                 FileHelpers.SetErrors($"Rodobens - Start() - {error?.Message}");
 
                 Restart();
+
+                Start();
             }
         }
 

@@ -57,6 +57,8 @@ namespace Factory.Rodobens
                     WorkFlow();
 
                     Restart(30 * 60 * 1000);
+
+                    return;
                 }
                 else
                 {
@@ -64,7 +66,6 @@ namespace Factory.Rodobens
 
                     Selenium.Finalizar();
 
-                    return;
                 }
             }
             catch (Exception error)
@@ -72,6 +73,8 @@ namespace Factory.Rodobens
                 FileHelpers.SetErrors($"CNF - Start() - {error?.Message}");
 
                 Restart();
+
+                Start();
             }
         }
 
@@ -82,6 +85,8 @@ namespace Factory.Rodobens
             FileHelpers.SetInfos(".:: Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
 
             Selenium.Delay(timer);
+
+            Start();
         }
 
         private static void WorkFlow()

@@ -72,6 +72,8 @@ namespace Factory.Rodobens
                 FileHelpers.SetErrors($"BRQualy - Start() - {error?.Message}");
 
                 Restart();
+
+                Start();
             }
         }
 

@@ -55,7 +55,6 @@ namespace Factory.Portobens
 
                     WorkFlow();
 
-                    Restart(30 * 60 * 1000);
                 }
                 else
                 {
@@ -71,6 +70,8 @@ namespace Factory.Portobens
                 FileHelpers.SetErrors($"Portobens - Start() - {error?.Message}");
 
                 Restart();
+
+                Start();
             }
         }
 
@@ -81,6 +82,7 @@ namespace Factory.Portobens
             FileHelpers.SetInfos(".:: Proxímo processamento:" + DateTime.Now.AddMilliseconds(timer));
 
             Selenium.Delay(timer);
+
         }
 
         private static void WorkFlow()
