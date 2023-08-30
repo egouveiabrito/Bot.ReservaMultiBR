@@ -71,6 +71,8 @@ namespace Factory.Portobens
 
                 Restart();
 
+                Selenium = new SeleniumHelper(new ConfigurationHelper());
+
                 Start();
             }
         }

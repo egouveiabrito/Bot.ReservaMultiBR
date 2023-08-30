@@ -74,6 +74,8 @@ namespace Factory.Rodobens
 
                 Restart();
 
+                Selenium = new SeleniumHelper(new ConfigurationHelper());
+
                 Start();
             }
         }
