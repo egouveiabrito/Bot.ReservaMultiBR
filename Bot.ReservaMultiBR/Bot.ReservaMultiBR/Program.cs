@@ -8,7 +8,7 @@ namespace Test
     {
         public static void Main()
         {
-            Console.Title = "..:::: MULT BR  ::::.. 2.0";
+            Console.Title = "..:::: MULT BR  ::::.. 2.3";
 
             Console.Write("Aperte ENTER para começar...", Console.ForegroundColor = ConsoleColor.DarkGreen);
 
