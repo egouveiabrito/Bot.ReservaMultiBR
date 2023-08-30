@@ -11,7 +11,6 @@ namespace Bot.ReservaMultiBR.Util
 
             Directory.CreateDirectory(Paths.ERRORS);
         }
-
         public static string TemplateReserva(string code, AdministradoraEnum administradora)
         {
             StreamReader str = new StreamReader(Paths.TEMPLATE_RESERVA);
@@ -163,31 +162,53 @@ namespace Bot.ReservaMultiBR.Util
 
         public static void SetStatus(string code, string status)
         {
-            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Grupo: {code} /Status: {status}";
+            try
+            {
+                string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Grupo: {code} /Status: {status}";
 
-            SetInfos(status);
+                SetInfos(status);
 
-            File.AppendAllText($@"{Paths.STATUS}\status.txt", $@"{line}" + Environment.NewLine);
+                File.AppendAllText($@"{Paths.STATUS}\status.txt", $@"{line}" + Environment.NewLine);
+
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro.Message);
+            }
         }
 
         public static void SetErrors(string error)
         {
             string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Error: {error}";
 
-            Console.WriteLine(line);
+            try
+            {
+                Console.WriteLine(line);
 
-            File.AppendAllText($@"{Paths.ERRORS}\errors.txt", $@"{line}" + Environment.NewLine);
+                File.AppendAllText($@"{Paths.ERRORS}\errors.txt", $@"{line}" + Environment.NewLine);
 
-            Mail.Error(error);
+                Mail.Error(error);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro.Message);
+            }
         }
 
         public static void SetInfos(string infos)
         {
-            string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Info: {infos}";
+            try
+            {
+                string line = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm").ToString() + $"/Info: {infos}";
 
-            Console.WriteLine(line);
+                Console.WriteLine(line);
 
-            File.AppendAllText($@"{Paths.INFOS}\infos.txt", $@"{line}" + Environment.NewLine);
+                File.AppendAllText($@"{Paths.INFOS}\infos.txt", $@"{line}" + Environment.NewLine);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro.Message);
+            }
         }
 
         public static string SucessoPath(AdministradoraEnum administradora)

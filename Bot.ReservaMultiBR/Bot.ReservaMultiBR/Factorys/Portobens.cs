@@ -43,7 +43,7 @@ namespace Factory.Portobens
                     FileHelpers.SetInfos(".:: Acessar Consorcio");
                     Selenium.ExecuteScript();
 
-                    Selenium.Delay(2000);
+                    Selenium.Delay(4000);
                     FileHelpers.SetInfos(".:: Selecionar Tab");
                     Selenium.SetTab();
 
@@ -55,7 +55,7 @@ namespace Factory.Portobens
 
                     WorkFlow();
 
-                    Restart(15 * 60 * 1000);
+                    Restart(30 * 60 * 1000);
                 }
                 else
                 {
@@ -68,7 +68,7 @@ namespace Factory.Portobens
             }
             catch (Exception error)
             {
-                FileHelpers.SetErrors($"Start() - {error?.Message}");
+                FileHelpers.SetErrors($"Portobens - Start() - {error?.Message}");
 
                 Restart();
             }

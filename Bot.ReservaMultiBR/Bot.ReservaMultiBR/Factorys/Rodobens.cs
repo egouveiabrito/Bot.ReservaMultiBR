@@ -44,7 +44,7 @@ namespace Factory.Rodobens
                     FileHelpers.SetInfos(".:: Acessar Consorcio");
                     Selenium.ExecuteScript();
 
-                    Selenium.Delay(2000);
+                    Selenium.Delay(4000);
                     FileHelpers.SetInfos(".:: Selecionar Tab");
                     Selenium.SetTab();
 
@@ -56,7 +56,7 @@ namespace Factory.Rodobens
 
                     WorkFlow();
 
-                    Restart(15 * 60 * 1000);
+                    Restart(30 * 60 * 1000);
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace Factory.Rodobens
             }
             catch (Exception error)
             {
-                FileHelpers.SetErrors($"Start() - {error?.Message}");
+                FileHelpers.SetErrors($"Rodobens - Start() - {error?.Message}");
 
                 Restart();
             }
