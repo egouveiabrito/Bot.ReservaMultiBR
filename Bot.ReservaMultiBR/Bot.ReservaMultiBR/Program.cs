@@ -39,38 +39,34 @@ namespace Test
             switch (selecao)
             {
                 case "1":
-                    while (true)
-                    {
-                        Rodobens.Start();
-                        Portobens.Start();
-                        BRQualy.Start();
-                        CNF.Start();
-                    }
+                    Rodobens.Start();
+                    Portobens.Start();
+                    BRQualy.Start();
+                    CNF.Start();
+                    break;
                 case "2":
-                    while (true)
-                    {
-                        Portobens.Start();
-                        Rodobens.Start();
-                        BRQualy.Start();
-                        CNF.Start();
-                    }
+
+                    Portobens.Start();
+                    Rodobens.Start();
+                    BRQualy.Start();
+                    CNF.Start();
+                    break;
 
                 case "3":
-                    while (true)
-                    {
-                        BRQualy.Start();
-                        Portobens.Start();
-                        Rodobens.Start();
-                        CNF.Start();
-                    }
+
+                    BRQualy.Start();
+                    Portobens.Start();
+                    Rodobens.Start();
+                    CNF.Start();
+                    break;
                 case "4":
-                    while (true)
-                    {
-                        CNF.Start();
-                        BRQualy.Start();
-                        Portobens.Start();
-                        Rodobens.Start();
-                    }
+
+                    CNF.Start();
+                    BRQualy.Start();
+                    Portobens.Start();
+                    Rodobens.Start();
+                    break;
+
                 default:
                     Console.Clear();
                     Console.WriteLine($"Opção inválida");
@@ -78,6 +74,8 @@ namespace Test
                     return;
 
             }
+
+            Start(selecao);
         }
     }
 }

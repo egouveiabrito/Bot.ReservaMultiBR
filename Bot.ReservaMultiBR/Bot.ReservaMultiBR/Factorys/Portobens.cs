@@ -182,6 +182,17 @@ namespace Factory.Portobens
                         Selenium.ClickById("ButtonReservarCota");
                         Selenium.ClickByXPath("/html/body/div/div[1]/div/div/div[3]/div[2]/button[2]");
 
+                        FileHelpers.SetInfos(".:: Validar limite maximo de reservas");
+                        Selenium.Delay(9000);
+                        var utrapassouLimte = Selenium.GetTextByXPath("/html/body/div/div[2]/div/div/div[1]");
+                        if (utrapassouLimte.Contains("ATENÇÃO"))
+                        {
+                            FileHelpers.SetInfos(".:: Não foi possivel realizar a reserva.\n");
+                            Selenium.Finalizar();
+                            retry_workflow = 0;
+                            continue;
+                        }
+
                         Selenium.Delay(1000);
                         FileHelpers.SetInfos(".:: Confirmar");
                         Selenium.ClickByXPath("/html/body/div/div[2]/div/div/div[3]/div[2]/button[2]");
