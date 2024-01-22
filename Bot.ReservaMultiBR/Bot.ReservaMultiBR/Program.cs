@@ -8,7 +8,7 @@ namespace Test
     {
         public static void Main()
         {
-            Console.Title = "..:::: MULT BR  ::::.. 2.5";
+            Console.Title = "..:::: MULT BR  ::::.. 2.6";
 
             Console.Write("Aperte ENTER para começar...", Console.ForegroundColor = ConsoleColor.DarkGreen);
 
@@ -28,9 +28,11 @@ namespace Test
 
             Console.WriteLine("Digite 4 para CNF");
 
-            var selecao = Console.ReadLine();
+            Mail.Error("teste");
 
-            Start(selecao);
+            //var selecao = Console.ReadLine();
+
+            //Start(selecao);
         }
         public static void Start(string selecao)
         {

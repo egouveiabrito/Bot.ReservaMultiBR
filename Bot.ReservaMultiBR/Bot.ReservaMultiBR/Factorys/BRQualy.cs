@@ -109,6 +109,13 @@ namespace Factory.Rodobens
                         FileHelpers.SetInfos(".:: Selecionar consorcio");
                         Selenium.GoToUrl(URL_TOKEN);
 
+                        Selenium.Delay(9000);
+                        var validarPopupCookies = Selenium.GetTextByXPath("/html/body/div/div/div/div[1]/div[3]/div[1]/p[1]");
+                        if (validarPopupCookies.Contains("Nós usamos cookies"))
+                        {
+                            Selenium.ClickByXPath("/html/body/div/div/div/div[1]/div[3]/div[2]/button[2]/span");
+                            FileHelpers.SetInfos(".:: Fechar Cookies...");
+                        }
 
                         Selenium.Delay(9000);
                         FileHelpers.SetInfos(".:: Procurando o Card BRQUALY...");
